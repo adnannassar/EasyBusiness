@@ -71,7 +71,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
         fillGridLayoutMainMenu();
 
-
+        String testGit = "Test Git";
         //Search Function
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
