@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mythemecolor"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="100dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+        <ImageView
+            android:id="@+id/imageViewProfileItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/phone2" />
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:text="Name"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtDescreption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="Descreption"
+            android:textColor="@color/whitebackground"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

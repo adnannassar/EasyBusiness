@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">EasyBusiness</string>
+    <string name="phone_accessories"><![CDATA[Phone&Accessories]]></string>
+    <string name="ketegorien">Kategorien</string>
+    <string name="cars">Cars</string>
+    <string name="baby_amp_child"><![CDATA[Baby & Child]]></string>
+    <string name="fashion_amp_accessories"><![CDATA[Fashion & Accessories]]></string>
+    <string name="pets_amp_accessories"><![CDATA[Pets & Accessories]]></string>
+    <string name="movies_books_amp_music"><![CDATA[Movies, Books & Music]]></string>
+    <string name="user">User</string>
+    <string name="discover">Discover</string>
+    <string name="others">Others</string>
+    <string name="sell">Sell</string>
+    <string name="services">Services</string>
+    <string name="houses">Houses</string>
+    <string name="motorcycles_amp_scooters"><![CDATA[Motorcycles & Scooters]]></string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="search_hint">Find the items that you like</string>
+    <string name="title_activity_user_tepped">userTeppedActivity</string>
+    <string name="tab_text_1">Messages</string>
+    <string name="tab_text_2">Selling</string>
+    <string name="tab_text_3">Profile</string>
+    <string name="title_activity_user_tapped">userTapped</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preis">Preis</string>
+    <string name="title_activity_google_maps">Map</string>
+    <string name="private_message">Private Message</string>
+</resources>

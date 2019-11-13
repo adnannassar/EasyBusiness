@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main_menu_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mythemecolor"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+
+            <SearchView
+                android:id="@+id/searchview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/stroke"
+                android:closeIcon="@drawable/rsz_x"
+                android:queryHint="Find Items that you like"
+                android:searchIcon="@drawable/searchicon">
+
+            </SearchView>
+
+            <ImageView
+                android:id="@+id/btnFilter"
+                android:layout_width="44dp"
+                android:layout_height="33dp"
+                android:contentDescription="@string/todo"
+                app:srcCompat="@drawable/filterbiiger" />
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/ketegorien"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/white"></TextView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="107dp"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnKategorienPhones"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/phonegreen"
+                            android:text="@string/phone_accessories"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienElctoAndComp"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/laptopgreen"
+                            android:text="Electrics &amp; Computers"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            tools:text="Elctronics &amp; Computers" />
+
+                        <Button
+                            android:id="@+id/btnKategorienCars"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:drawableTop="@drawable/caragreen2"
+                            android:text="@string/cars"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienBabys"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/strollergreen"
+                            android:text="@string/baby_amp_child"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienFahsion"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/fashiongreen"
+                            android:text="@string/fashion_amp_accessories"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienPets"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/dog_green"
+                            android:text="@string/pets_amp_accessories"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienMovies"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/moviegreen"
+                            android:text="@string/movies_books_amp_music"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienMotors"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/motorgreen"
+                            android:text="@string/motorcycles_amp_scooters"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienHouses"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/housegreen"
+                            android:text="@string/houses"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienServices"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/servicesgreen"
+                            android:text="@string/services"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/btnKategorienOthers"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/othersgreen"
+                            android:text="@string/others"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="Highlights"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/white"></TextView>
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridLayoutMainMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="#212121"
+                    app:columnCount="2"
+                    app:useDefaultMargins="false">
+
+
+
+
+
+                </androidx.gridlayout.widget.GridLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/strokesmall2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnDiscover"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/discovericon3"
+                android:fadeScrollbars="false"
+                android:text="@string/discover"
+                android:textColor="#227671"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button_black_when_prees"
+                android:onClick="discover"
+                />
+
+            <Button
+                android:id="@+id/btnSell"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/cameraicon2"
+                android:onClick="startSellingActivity"
+                android:text="@string/sell"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button_black_when_prees"/>
+
+            <Button
+                android:id="@+id/btnUser"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/usericonsmall"
+                android:onClick="goToUserActivity"
+                android:text="@string/user"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button_black_when_prees"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
