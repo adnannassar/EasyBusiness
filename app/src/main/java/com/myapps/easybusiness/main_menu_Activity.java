@@ -288,7 +288,7 @@ public class main_menu_Activity extends AppCompatActivity {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         //query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.orderByAscending("createdAt");
-        query.setLimit(5);
+        query.setLimit(10);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

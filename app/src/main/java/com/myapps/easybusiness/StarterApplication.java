@@ -53,7 +53,8 @@ public class StarterApplication extends Application {
     public void onCreate() {
         super.onCreate();
       //  parseSettingAndInit();
-      parseSettingAndInitLocal();
+      //  parseSettingAndInitLocal();
+      parseSettingAndInitBack4App();
     }
 
     public void createParseObject(String objectname) {
@@ -105,6 +106,27 @@ public class StarterApplication extends Application {
                 .clientKey("2211")
                 //.server("http://10.0.2.2:1337/parse/") // for emulator
                 .server("http://192.168.0.101:1337/parse/") // for real android device from house
+                //.server("http://172.22.202.195:1337/parse/") // for FH Dortmund
+                .build()
+        );
+
+        // ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        defaultACL.setPublicReadAccess(true);
+        defaultACL.setPublicWriteAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
+
+
+    }
+    public void parseSettingAndInitBack4App()    {
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        // Add your initialization code here
+        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+                .applicationId("uYTa0kVTWzZdEHMl4m14JWtVBB8iQh9sQzn3FAuA")
+                .clientKey("QqyDuSTadY6wLk4bOjS04qhbJ20AfvEUNZoSRc9g")
+                //.server("http://10.0.2.2:1337/parse/") // for emulator
+                .server("https://parseapi.back4app.com/") // for real android device from house
                 //.server("http://172.22.202.195:1337/parse/") // for FH Dortmund
                 .build()
         );

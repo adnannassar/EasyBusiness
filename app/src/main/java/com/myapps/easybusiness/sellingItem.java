@@ -49,6 +49,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class sellingItem extends AppCompatActivity {
     static int photoCounter;
     AutoCompleteTextView editTextPlz;
     EditText editTextTitle, editTextDescritopn, editTextPrice;
-    Button btnSell ;
+    Button btnSell;
 
     @Override
 
@@ -260,6 +261,7 @@ public class sellingItem extends AppCompatActivity {
             Toast.makeText(this, "Sie können Maximal 5 Fotos auswählen", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void getPhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 1);
@@ -324,7 +326,7 @@ public class sellingItem extends AppCompatActivity {
             ParseObject object = new ParseObject("Item");
             Location location = converAdresseTOGeo(editTextPlz.getText().toString());
             ParseGeoPoint parseGeoPoint = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-            object.put("itemLocation",parseGeoPoint);
+            object.put("itemLocation", parseGeoPoint);
             object.put("username", ParseUser.getCurrentUser().getUsername());
             for (int i = 0; i < photosBitMaps.size(); i++) {
                 // send the photos to Parse server
@@ -332,27 +334,28 @@ public class sellingItem extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photosBitMaps.get(i).compress(Bitmap.CompressFormat.WEBP, 100, stream); // 100 ist the quality
                 byte[] bytesArray = stream.toByteArray();
-                ParseFile file = new ParseFile("photo" + (i+1) + ".WEBP", bytesArray);
-                object.put("photo" +(i+1), file);
+                ParseFile file = new ParseFile("photo" + (i + 1) + ".WEBP", bytesArray);
+                object.put("photo" + (i + 1), file);
             }
             object.put("title", editTextTitle.getText().toString());
             object.put("titleLowCase", editTextTitle.getText().toString().toLowerCase());
             object.put("descreption", editTextDescritopn.getText().toString());
             object.put("price", Integer.valueOf(editTextPrice.getText().toString()));
             object.put("category", spinner_category.getSelectedItem().toString());
-            object.put("currency",spinner_currency.getSelectedItem().toString());
+            object.put("currency", spinner_currency.getSelectedItem().toString());
 
             object.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
-                        Toast.makeText(getApplicationContext(), "Item würde erfolgreich veröffentlicht", Toast.LENGTH_SHORT).show();
+                        FancyToast.makeText(getApplicationContext(), "Item würde erfolgreich veröffentlicht", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true).show();
+
                     } else {
-                        Toast.makeText(getApplicationContext(), "Server is busy... \nplease try again later", Toast.LENGTH_SHORT).show();
+                        FancyToast.makeText(getApplicationContext(), "Server is busy... \nplease try again later", FancyToast.LENGTH_LONG, FancyToast.WARNING, true).show();
                     }
                 }
             });
-                btnSell.setEnabled(false);
+            btnSell.setEnabled(false);
             Intent intent = new Intent(this, main_menu_Activity.class);
             startActivity(intent);
 
@@ -525,21 +528,22 @@ public class sellingItem extends AppCompatActivity {
             canvas.drawBitmap(mBitmap, mMatrix, mPaint);
         }
     }
-    public Location converAdresseTOGeo(String adresse){
+
+    public Location converAdresseTOGeo(String adresse) {
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         Location location = new Location(LocationManager.GPS_PROVIDER);
 
-        try{
-            List<Address> addressList =    geocoder.getFromLocationName(adresse,1);
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(adresse, 1);
             if (addressList != null && addressList.size() > 0) {
                 location.setLatitude(addressList.get(0).getLatitude());
                 location.setLongitude(addressList.get(0).getLongitude());
                 return location;
-            }else{
-                Toast.makeText(this,"Error by converting the Adress to Geo",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Error by converting the Adress to Geo", Toast.LENGTH_SHORT).show();
             }
-        }catch (Exception ex){
-            Toast.makeText(this,ex.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return location;
     }
