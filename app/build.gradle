@@ -39,5 +39,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
+    //new
+    compile ("com.github.bumptech.glide:recyclerview-integration:4.9.0") {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
+    // CircleImage View
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }

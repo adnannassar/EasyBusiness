@@ -49,7 +49,7 @@ public class main_menu_Activity extends AppCompatActivity {
     static Button btnDiscover, btnSell, btnUser;
     GridLayout gridLayoutMainMenu;
     static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
-     final static List<ParseObject> objectList = getObjects();
+    final static List<ParseObject> objectList = MainActivity.objectArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +69,11 @@ public class main_menu_Activity extends AppCompatActivity {
 
         initMainMenu();
 
-        fillGridLayoutMainMenu();
+        //fillGridLayoutMainMenu();
+        //fillGridLayoutMainMenuFromArray();
 
-        String testGit = "Test Git";
+
+
         //Search Function
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -135,7 +137,7 @@ public class main_menu_Activity extends AppCompatActivity {
     }
 
 
-    public void  fillGridLayoutMainMenuFromArray() {
+    public void fillGridLayoutMainMenuFromArray() {
 
 
         if (objectList.size() > 0) {
@@ -284,7 +286,8 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     }
-    public void  fillGridLayoutMainMenu(){
+
+    public void fillGridLayoutMainMenu() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         //query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.orderByAscending("createdAt");
@@ -444,6 +447,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     }
+
 
     public void fillGridLayoutMainMenuAfterSearch(String searchQuery) {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");

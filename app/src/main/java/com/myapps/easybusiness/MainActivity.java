@@ -14,10 +14,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     StarterApplication parseStarter;
     Animation zoomin;
+    public static List<ParseObject> objectArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,5 +104,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void signUp(View view) {
 
+    }
+
+    static public List<ParseObject> getObjects() {
+        ParseQuery<ParseObject> query = new ParseQuery<>("Item");
+        query.orderByAscending("createdAt");
+        try {
+            return query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
