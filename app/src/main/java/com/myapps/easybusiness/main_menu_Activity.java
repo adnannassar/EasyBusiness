@@ -40,6 +40,7 @@ import com.parse.GetDataCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -51,9 +52,10 @@ public class main_menu_Activity extends AppCompatActivity {
     SearchView searchView;
     static Button btnDiscover, btnSell, btnUser;
     GridLayout gridLayoutMainMenu;
+
     //old way
-    static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
-    ArrayList<Bitmap> bitmapArrayList;
+    // static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
+    // ArrayList<Bitmap> bitmapArrayList;
 
     //new way
     final static List<ParseObject> objectList = MainActivity.objectArrayList;
@@ -65,6 +67,9 @@ public class main_menu_Activity extends AppCompatActivity {
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> preises = new ArrayList<>();
     private ArrayList<String> objectIdes = new ArrayList<>();
+    private ArrayList<String> descreptions = new ArrayList<>();
+    private ArrayList<Double> latitudes = new ArrayList<>();
+    private ArrayList<Double> longitudes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +155,7 @@ public class main_menu_Activity extends AppCompatActivity {
                 }).create().show();
     }
 
-
+    /*
     public void fillGridLayoutMainMenuFromArray() {
 
 
@@ -300,7 +305,8 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     }
-
+    */
+    /*
     public void fillGridLayoutMainMenu() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         //query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
@@ -461,7 +467,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     }
-
+    */
 
     public void fillGridLayoutMainMenuAfterSearch(String searchQuery) {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
@@ -613,14 +619,23 @@ public class main_menu_Activity extends AppCompatActivity {
         private ArrayList<String> titles;
         private ArrayList<String> preices;
         private ArrayList<String> objectIds;
+        private ArrayList<String> descreptions;
+        private ArrayList<Double> latitudes;
+        private ArrayList<Double> longitudes;
+
         private Context context;
 
-        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices, ArrayList<String> objectIds) {
+        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices,
+                                   ArrayList<String> objectIds, ArrayList<String> descreptions
+                , ArrayList<Double> latitudes, ArrayList<Double> longitudes) {
             this.images = images;
             this.titles = titles;
             this.preices = preices;
             this.context = context;
             this.objectIds = objectIds;
+            this.descreptions = descreptions;
+            this.latitudes = latitudes;
+            this.longitudes = longitudes;
         }
 
         @NonNull
@@ -641,13 +656,22 @@ public class main_menu_Activity extends AppCompatActivity {
             holder.title.setText(titles.get(position));
             holder.preise.setText(preices.get(position));
             holder.objectId = objectIds.get(position);
+            holder.descreption = descreptions.get(position);
+            holder.latitude = latitudes.get(position);
+            holder.longitude = longitudes.get(position);
 
             if (holder.imageView != null) {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(),displayItem.class);
-                        intent.putExtra("objectId",objectIdes.get(position));
+                        Intent intent = new Intent(getApplicationContext(), displayItem.class);
+                        intent.putExtra("objectId", objectIdes.get(position));
+                        intent.putExtra("title", titles.get(position));
+                        intent.putExtra("price", preices.get(position));
+                        intent.putExtra("descreption", descreptions.get(position));
+                        intent.putExtra("latitude", latitudes.get(position));
+                        intent.putExtra("longitude", longitudes.get(position));
+
                         startActivity(intent);
                     }
                 });
@@ -662,11 +686,12 @@ public class main_menu_Activity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            String objectId;
+            String objectId, descreption;
             ImageView imageView;
             TextView title;
             TextView preise;
             CardView parentLayout;
+            double latitude, longitude;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -690,7 +715,11 @@ public class main_menu_Activity extends AppCompatActivity {
             objectPhotos.add(photo1.getUrl());
             titles.add(object.getString("title"));
             preises.add(object.getInt("price") + " " + object.getString("currency"));
+            descreptions.add(object.getString("descreption"));
             objectIdes.add(object.getObjectId());
+            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
+            latitudes.add(itemLocation.getLatitude());
+            longitudes.add(itemLocation.getLongitude());
 
             final ParseFile photo2 = (ParseFile) object.get("photo2");
             if (photo2 != null) objectPhotos.add(photo2.getUrl());
@@ -711,7 +740,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
     private void inintRecyclerVIew() {
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises, objectIdes);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }

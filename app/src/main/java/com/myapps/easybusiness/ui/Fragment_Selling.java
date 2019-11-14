@@ -65,7 +65,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.orderByAscending("createdAt");
-        query.setLimit(2);
+        query.setLimit(6);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

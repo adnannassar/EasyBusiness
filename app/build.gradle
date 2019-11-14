@@ -61,4 +61,7 @@ dependencies {
     // For WebP support, without animations
     implementation 'com.facebook.fresco:webpsupport:2.0.0'
 
+    // map marker
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+
 }

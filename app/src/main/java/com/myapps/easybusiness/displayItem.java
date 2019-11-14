@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,8 +19,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 import java.io.FileInputStream;
 
@@ -48,11 +54,11 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         txtPreis = findViewById(R.id.txtPreisDisplayItme);
         txtDescreption = findViewById(R.id.txtDescreption);
 
-        Intent intent = getIntent();
 
-        txtTitle.setText(intent.getStringExtra("title"));
-        txtDescreption.setText(intent.getStringExtra("descreption"));
-        txtPreis.setText(intent.getIntExtra("price",0)+" "+intent.getStringExtra("currency"));
+        txtTitle.setText(getIntent().getStringExtra("title"));
+        txtDescreption.setText(getIntent().getStringExtra("descreption"));
+        txtPreis.setText(getIntent().getStringExtra("price"));
+
 
 
         // Map Settings
@@ -99,9 +105,10 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney and move the camera
+        LatLng itemLocation = new LatLng(getIntent().getDoubleExtra("latitude",0),getIntent().getDoubleExtra("longitude",0));
         LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
+        map.addMarker(new MarkerOptions().position(itemLocation).title("Item Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(itemLocation,10));
     }
 
     @Override
