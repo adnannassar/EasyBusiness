@@ -49,4 +49,5 @@ dependencies {
 
     // CircleImage View
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.facebook.fresco:fresco:2.0.0'
 }

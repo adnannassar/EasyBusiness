@@ -1,7 +1,6 @@
 package com.myapps.easybusiness;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +8,18 @@ import android.widget.ImageView;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class ItemsPager extends PagerAdapter {
 
 
     private Context context;
-    ArrayList<Bitmap> bitmapArrayLsit;
+    ArrayList<String> bitmapArrayLsit;
 
-    public ItemsPager(Context context, ArrayList<Bitmap> bitmapArrayLsit) {
+    public ItemsPager(Context context, ArrayList<String> bitmapArrayLsit) {
         this.context = context;
         this.bitmapArrayLsit = bitmapArrayLsit;
     }
@@ -33,8 +35,10 @@ public class ItemsPager extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
         ImageView imageView = view.findViewById(R.id.imageItem);
-        imageView.setImageBitmap(getImageAt(position));
-       // imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
+        //Picasso.with(context).load(getImageAt(position)).into(imageView);
+        Glide.with(context).load(getImageAt(position)).into(imageView);
+        //  imageView.setImageBitmap(getImageAt(position));
+        // imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
         container.addView(view);
         return view;
     }
@@ -65,9 +69,9 @@ public class ItemsPager extends PagerAdapter {
         return object == view;
     }
 
-    private Bitmap getImageAt(int position) {
+    private String getImageAt(int position) {
         return bitmapArrayLsit.get(position);
-        }
     }
+}
 
 

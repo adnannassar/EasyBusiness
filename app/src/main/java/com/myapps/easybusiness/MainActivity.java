@@ -18,6 +18,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     StarterApplication parseStarter;
     Animation zoomin;
     public static List<ParseObject> objectArrayList = getObjects();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

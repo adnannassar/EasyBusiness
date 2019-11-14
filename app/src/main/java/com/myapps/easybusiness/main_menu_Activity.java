@@ -31,40 +31,40 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.TransitionOptions;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class main_menu_Activity extends AppCompatActivity {
     SearchView searchView;
     static Button btnDiscover, btnSell, btnUser;
     GridLayout gridLayoutMainMenu;
+    //old way
     static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
+    ArrayList<Bitmap> bitmapArrayList;
+
+    //new way
     final static List<ParseObject> objectList = MainActivity.objectArrayList;
+    static LinkedHashMap<String, ArrayList<String>> objectsMap = new LinkedHashMap<>();
+
+
     // vars
     private ArrayList<String> imagesUrls = new ArrayList<>();
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> preises = new ArrayList<>();
+    private ArrayList<String> objectIdes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -607,18 +607,20 @@ public class main_menu_Activity extends AppCompatActivity {
         return null;
     }
 
-    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-        private ArrayList<String> images = new ArrayList<>();
-        private ArrayList<String> titles = new ArrayList<>();
-        private ArrayList<String> preices = new ArrayList<>();
+        private ArrayList<String> images;
+        private ArrayList<String> titles;
+        private ArrayList<String> preices;
+        private ArrayList<String> objectIds;
         private Context context;
 
-        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices) {
+        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices, ArrayList<String> objectIds) {
             this.images = images;
             this.titles = titles;
             this.preices = preices;
             this.context = context;
+            this.objectIds = objectIds;
         }
 
         @NonNull
@@ -630,7 +632,7 @@ public class main_menu_Activity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
             Glide.with(context)
                     .asBitmap()
@@ -638,6 +640,20 @@ public class main_menu_Activity extends AppCompatActivity {
                     .into(holder.imageView);
             holder.title.setText(titles.get(position));
             holder.preise.setText(preices.get(position));
+            holder.objectId = objectIds.get(position);
+
+            if (holder.imageView != null) {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(),displayItem.class);
+                        intent.putExtra("objectId",objectIdes.get(position));
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -646,6 +662,7 @@ public class main_menu_Activity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            String objectId;
             ImageView imageView;
             TextView title;
             TextView preise;
@@ -664,22 +681,39 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     private void inintImagesBitMaps() {
-        for(ParseObject object : objectList){
+        int c = 0;
+        for (ParseObject object : objectList) {
+            ArrayList<String> objectPhotos = new ArrayList<>();
+            c++;
             final ParseFile photo1 = (ParseFile) object.get("photo1");
             imagesUrls.add(photo1.getUrl());
+            objectPhotos.add(photo1.getUrl());
             titles.add(object.getString("title"));
-            preises.add(object.getInt("price")+" "+object.getString("currency"));
+            preises.add(object.getInt("price") + " " + object.getString("currency"));
+            objectIdes.add(object.getObjectId());
+
+            final ParseFile photo2 = (ParseFile) object.get("photo2");
+            if (photo2 != null) objectPhotos.add(photo2.getUrl());
+            final ParseFile photo3 = (ParseFile) object.get("photo3");
+            if (photo3 != null) objectPhotos.add(photo3.getUrl());
+            final ParseFile photo4 = (ParseFile) object.get("photo4");
+            if (photo4 != null) objectPhotos.add(photo4.getUrl());
+            final ParseFile photo5 = (ParseFile) object.get("photo5");
+            if (photo5 != null) objectPhotos.add(photo5.getUrl());
+
+            objectsMap.put(object.getObjectId(), objectPhotos);
         }
 
-
+        Toast.makeText(this, String.valueOf(c), Toast.LENGTH_LONG).show();
         inintRecyclerVIew();
 
     }
 
     private void inintRecyclerVIew() {
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises, objectIdes);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
+
 }

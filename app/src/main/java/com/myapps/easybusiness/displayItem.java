@@ -38,7 +38,7 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         getSupportActionBar().hide();
         setContentView(R.layout.activity_display_item);
 
-        myPager = new ItemsPager(this,main_menu_Activity.objectsArrayList.get(getIntent().getIntExtra("id",0)).photosList);
+        myPager = new ItemsPager(this,main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
         viewPager = findViewById(R.id.view_pager_item);
         viewPager.setAdapter(myPager);
         circleIndicator = findViewById(R.id.circle);
