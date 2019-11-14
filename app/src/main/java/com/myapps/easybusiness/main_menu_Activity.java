@@ -1,9 +1,13 @@
 package com.myapps.easybusiness;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,10 +17,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.style.LeadingMarginSpan;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +35,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.TransitionOptions;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.Parse;
@@ -44,12 +53,18 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class main_menu_Activity extends AppCompatActivity {
     SearchView searchView;
     static Button btnDiscover, btnSell, btnUser;
     GridLayout gridLayoutMainMenu;
     static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
     final static List<ParseObject> objectList = MainActivity.objectArrayList;
+    // vars
+    private ArrayList<String> imagesUrls = new ArrayList<>();
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<String> preises = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +86,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
         //fillGridLayoutMainMenu();
         //fillGridLayoutMainMenuFromArray();
-
-
+        inintImagesBitMaps();
 
         //Search Function
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -591,5 +605,81 @@ public class main_menu_Activity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+
+        private ArrayList<String> images = new ArrayList<>();
+        private ArrayList<String> titles = new ArrayList<>();
+        private ArrayList<String> preices = new ArrayList<>();
+        private Context context;
+
+        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices) {
+            this.images = images;
+            this.titles = titles;
+            this.preices = preices;
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
+            ViewHolder viewHolder = new ViewHolder(view);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+            Glide.with(context)
+                    .asBitmap()
+                    .load(images.get(position))
+                    .into(holder.imageView);
+            holder.title.setText(titles.get(position));
+            holder.preise.setText(preices.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView;
+            TextView title;
+            TextView preise;
+            CardView parentLayout;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                imageView = itemView.findViewById(R.id.imageViewItemInRecyclerView);
+                title = itemView.findViewById(R.id.txttitleInRecyclerView);
+                preise = itemView.findViewById(R.id.txtpreisInRecyclerView);
+                parentLayout = findViewById(R.id.parent_layout_In_RecyclerView);
+
+            }
+        }
+    }
+
+
+    private void inintImagesBitMaps() {
+        for(ParseObject object : objectList){
+            final ParseFile photo1 = (ParseFile) object.get("photo1");
+            imagesUrls.add(photo1.getUrl());
+            titles.add(object.getString("title"));
+            preises.add(object.getInt("price")+" "+object.getString("currency"));
+        }
+
+
+        inintRecyclerVIew();
+
+    }
+
+    private void inintRecyclerVIew() {
+        RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
 }

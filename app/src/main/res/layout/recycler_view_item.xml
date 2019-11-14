@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.gridlayout.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".itemsInListViewItem">
+    android:layout_height="wrap_content"
+    app:columnCount="2"
+    android:padding="5dp"
+    android:background="@color/mythemecolor">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/black"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="#000"
         app:cardCornerRadius="15dp"
         app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnDeleteItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="340dp"
-            android:clickable="true"
-            app:backgroundTint="@color/black"
-            app:srcCompat="@drawable/delete_sign_red" />
-
+        app:cardUseCompatPadding="false"
+        android:id="@+id/parent_layout_In_RecyclerView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical">
 
-
             <ImageView
-                android:id="@+id/imageViewItem"
+                android:id="@+id/imageViewItemInRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
                 android:layout_gravity="top"
@@ -42,7 +30,7 @@
                 app:srcCompat="@drawable/e" />
 
             <TextView
-                android:id="@+id/txtPreis"
+                android:id="@+id/txttitleInRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
@@ -50,7 +38,7 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/txtdate"
+                android:id="@+id/txtpreisInRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
@@ -59,16 +47,12 @@
                 android:textColor="@color/whitebackground"
                 android:textSize="10sp" />
 
-            <TextView
-                android:id="@+id/txtDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingBottom="2dp"
-                android:text="here is the Date"
-                android:textColor="@color/whitebackground"
-                android:textSize="10sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-</RelativeLayout>
+
+
+
+
+
+</androidx.gridlayout.widget.GridLayout>

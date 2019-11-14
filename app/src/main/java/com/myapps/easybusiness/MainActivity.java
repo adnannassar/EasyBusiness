@@ -24,7 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     StarterApplication parseStarter;
     Animation zoomin;
-    public static List<ParseObject> objectArrayList = new ArrayList<>();
+    public static List<ParseObject> objectArrayList = getObjects();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
