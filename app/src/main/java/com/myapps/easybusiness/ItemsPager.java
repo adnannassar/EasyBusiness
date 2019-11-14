@@ -1,6 +1,7 @@
 package com.myapps.easybusiness;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,11 @@ public class ItemsPager extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
         ImageView imageView = view.findViewById(R.id.imageItem);
-        //Picasso.with(context).load(getImageAt(position)).into(imageView);
-        Glide.with(context).load(getImageAt(position)).into(imageView);
-        //  imageView.setImageBitmap(getImageAt(position));
+          Uri uri = Uri.parse(getImageAt(position));
+         imageView.setImageURI(uri);
+        // Picasso.with(context).load(getImageAt(position)).into(imageView);
+         //Glide.with(context).load(getImageAt(position)).into(imageView);
+        // imageView.setImageBitmap(getImageAt(position));
         // imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
         container.addView(view);
         return view;

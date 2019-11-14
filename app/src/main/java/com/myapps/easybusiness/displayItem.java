@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,7 +38,7 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_display_item);
-
+        Fresco.initialize(this);
         myPager = new ItemsPager(this,main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
         viewPager = findViewById(R.id.view_pager_item);
         viewPager.setAdapter(myPager);
