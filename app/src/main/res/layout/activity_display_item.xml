@@ -21,7 +21,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager_item"
             android:layout_width="match_parent"
-            android:layout_height="498dp" />
+            android:layout_height="match_parent" />
 
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/circle"
@@ -111,23 +111,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="110dp"
-                        android:layout_height="103dp"
-                        app:cardBackgroundColor="@color/black"
-                        app:cardCornerRadius="100dp"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="false">
 
-                        <ImageView
-                            android:id="@+id/imageViewItem"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="top"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/userfoto" />
-
-                    </androidx.cardview.widget.CardView>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewUserPhotoInDisplayItem"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@mipmap/ic_launcher" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -137,7 +130,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/textUserName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Adnan N."

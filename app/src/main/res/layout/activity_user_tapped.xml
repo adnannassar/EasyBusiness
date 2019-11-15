@@ -61,31 +61,17 @@
                 android:textColor="#227671"
                 android:textSize="18sp" />
 
-            <androidx.cardview.widget.CardView
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewUserPhoto"
                 android:layout_width="110dp"
-                android:layout_height="103dp"
+                android:layout_height="124dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="52dp"
-                app:cardBackgroundColor="@color/mythemecolor"
-                app:cardCornerRadius="100dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="false"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="0dp"
                 android:onClick="changeUserProfilePhoto"
-                android:id="@+id/cardViewuserProfile">
-
-                <ImageView
-                    android:id="@+id/imageViewUserPhoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/user_male_circle_90px" />
-
-            </androidx.cardview.widget.CardView>
+                android:src="@mipmap/ic_launcher" />
 
             <ImageButton
                 android:id="@+id/imageButton"

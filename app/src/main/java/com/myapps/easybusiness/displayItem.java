@@ -7,28 +7,37 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.common.internal.Objects;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.io.FileInputStream;
 
+import bolts.Task;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator;
 
 public class displayItem extends AppCompatActivity implements OnMapReadyCallback {
@@ -38,14 +47,16 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
     private ItemsPager myPager;
     private MapView mMapView;
     private static final String MAPVIEW_BUNDLE_KEY = "AIzaSyBd3YFdw4hdmZ2JuikJlJFphPSmDpbdT34";
-    TextView txtTitle , txtPreis, txtDescreption;
+    TextView txtTitle, txtPreis, txtDescreption, textUsername;
+    CircleImageView imageViewUserPhotoInDisplayItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_display_item);
         Fresco.initialize(this);
-        myPager = new ItemsPager(this,main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
+        myPager = new ItemsPager(this, main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
         viewPager = findViewById(R.id.view_pager_item);
         viewPager.setAdapter(myPager);
         circleIndicator = findViewById(R.id.circle);
@@ -53,12 +64,18 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         txtTitle = findViewById(R.id.txtTitle);
         txtPreis = findViewById(R.id.txtPreisDisplayItme);
         txtDescreption = findViewById(R.id.txtDescreption);
+        textUsername = findViewById(R.id.textUserName);
+        imageViewUserPhotoInDisplayItem = findViewById(R.id.imageViewUserPhotoInDisplayItem);
 
 
         txtTitle.setText(getIntent().getStringExtra("title"));
         txtDescreption.setText(getIntent().getStringExtra("descreption"));
         txtPreis.setText(getIntent().getStringExtra("price"));
-
+        textUsername.setText(ParseUser.getCurrentUser().getUsername());
+        ParseFile userPhoto = ParseUser.getCurrentUser().getParseFile("profilePhoto");
+        if (userPhoto != null) {
+            Glide.with(this).load(userPhoto.getUrl()).into(imageViewUserPhotoInDisplayItem);
+        }
 
 
         // Map Settings
@@ -84,6 +101,7 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
 
         mMapView.onSaveInstanceState(mapViewBundle);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -105,10 +123,10 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney and move the camera
-        LatLng itemLocation = new LatLng(getIntent().getDoubleExtra("latitude",0),getIntent().getDoubleExtra("longitude",0));
-        LatLng sydney = new LatLng(-34, 151);
+        LatLng itemLocation = new LatLng(getIntent().getDoubleExtra("latitude", 0), getIntent().getDoubleExtra("longitude", 0));
         map.addMarker(new MarkerOptions().position(itemLocation).title("Item Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(itemLocation,10));
+        map.animateCamera((CameraUpdateFactory.newLatLngZoom(itemLocation, 10)));
+
     }
 
     @Override

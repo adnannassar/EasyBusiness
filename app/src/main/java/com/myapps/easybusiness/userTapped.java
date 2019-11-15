@@ -30,8 +30,10 @@ import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class userTapped extends AppCompatActivity {
-    ImageView profilePhoto;
+    CircleImageView profilePhoto;
     TextView txtUserName ;
 
     @Override

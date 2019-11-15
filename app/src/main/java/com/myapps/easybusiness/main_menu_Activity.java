@@ -583,7 +583,7 @@ public class main_menu_Activity extends AppCompatActivity {
     public void discover(View view) {
         refreshPage();
     }
-
+    /*
     public class objectFromServer {
         int id;
         ArrayList<Bitmap> photosList;
@@ -612,7 +612,7 @@ public class main_menu_Activity extends AppCompatActivity {
         }
         return null;
     }
-
+    */
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
         private ArrayList<String> images;

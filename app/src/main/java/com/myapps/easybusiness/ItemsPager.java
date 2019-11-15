@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ItemsPager extends PagerAdapter {
     public ItemsPager(Context context, ArrayList<String> bitmapArrayLsit) {
         this.context = context;
         this.bitmapArrayLsit = bitmapArrayLsit;
+        Fresco.initialize(context);
     }
 
     /*
@@ -34,9 +36,9 @@ public class ItemsPager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
-        ImageView imageView = view.findViewById(R.id.imageItem);
-          Uri uri = Uri.parse(getImageAt(position));
+         View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
+         ImageView imageView = view.findViewById(R.id.imageItem);
+            Uri uri = Uri.parse(getImageAt(position));
          imageView.setImageURI(uri);
         // Picasso.with(context).load(getImageAt(position)).into(imageView);
          //Glide.with(context).load(getImageAt(position)).into(imageView);

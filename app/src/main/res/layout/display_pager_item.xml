@@ -7,13 +7,15 @@
     android:orientation="vertical">
 
 
-
-         <com.facebook.drawee.view.SimpleDraweeView
-         android:id="@+id/imageItem"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         fresco:placeholderImage="@drawable/my_drawable"
-         />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imageItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        app:fadeDuration="1000"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/appname"
+        fresco:placeholderImageScaleType="fitCenter" />
 
 
     <!--

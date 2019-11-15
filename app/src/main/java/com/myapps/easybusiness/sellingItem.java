@@ -60,6 +60,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -289,20 +290,16 @@ public class sellingItem extends AppCompatActivity {
                 Bitmap bitmap = ImageDecoder.decodeBitmap(source);
                 //Bitmap resizedBitMap = Bitmap.createScaledBitmap(bitmap, 143, 143, true);
                 photosBitMaps.add(bitmap);
-                ImageView imageView = new ImageView(getApplicationContext());
+                CircleImageView imageView = new CircleImageView(getApplicationContext());
                 imageView.setImageBitmap(bitmap);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                final float scale = getResources().getDisplayMetrics().density;
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) (88 * scale), LinearLayout.LayoutParams.MATCH_PARENT);
+                lp.setMargins((int) (5 * scale), 0, 0, 0);
+                imageView.setLayoutParams(lp);
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(143, 143);
-                lp.setMargins(20, 0, 0, 0);
 
-                CardView cardView = new CardView(getApplicationContext());
-                cardView.addView(imageView);
-                cardView.setRadius(100);
-                cardView.setLayoutParams(lp);
-                cardView.setCardBackgroundColor(Color.BLACK);
-
-                linearLayoutSelectedImages.addView(cardView);
+                linearLayoutSelectedImages.addView(imageView);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
