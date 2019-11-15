@@ -1,10 +1,12 @@
 package com.myapps.easybusiness.ui;
 
+import com.bumptech.glide.Glide;
 import com.myapps.easybusiness.Item;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -26,12 +28,19 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.myapps.easybusiness.MainActivity;
 import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.displayItem;
+import com.myapps.easybusiness.main_menu_Activity;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -43,19 +52,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Selling extends Fragment implements View.OnClickListener {
+    // vars
+    private ArrayList<String> imagesUrls = new ArrayList<>();
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<String> preises = new ArrayList<>();
+    private ArrayList<String> objectIdes = new ArrayList<>();
+    private ArrayList<String> descreptions = new ArrayList<>();
+    private ArrayList<Double> latitudes = new ArrayList<>();
+    private ArrayList<Double> longitudes = new ArrayList<>();
+    RecyclerView recyclerViewSelling;
 
-    LinearLayout linearLayoutSelling;
-
-    public Fragment_Selling() {
-    }
+    public Fragment_Selling() { }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selling_layout, container, false);
-        linearLayoutSelling = view.findViewById(R.id.layoutSelling);
-        fillLinearLayoutSelling();
+        recyclerViewSelling = view.findViewById(R.id.layoutSelling);
+     //  fillLinearLayoutSelling();
+        inintObjectsInRecyclerView();
         return view;
 
     }
@@ -163,7 +179,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
 
                                                             public void onClick(DialogInterface arg0, int arg1) {
                                                                 object.deleteInBackground();
-                                                                linearLayoutSelling.removeView(cardView);
+                                                                recyclerViewSelling.removeView(cardView);
                                                             }
                                                         }).create().show();
 
@@ -182,7 +198,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                                         cardView.addView(linearLayout);
                                         cardView.addView(btnDeleteItem);
 
-                                        linearLayoutSelling.addView(cardView);
+                                        recyclerViewSelling.addView(cardView);
 
                                     } else {
                                         e.printStackTrace();
@@ -201,6 +217,138 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         });
 
     }
+
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
+
+        private ArrayList<String> images;
+        private ArrayList<String> titles;
+        private ArrayList<String> preices;
+        private ArrayList<String> objectIds;
+        private ArrayList<String> descreptions;
+        private ArrayList<Double> latitudes;
+        private ArrayList<Double> longitudes;
+
+        private Context context;
+
+        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices,
+                                   ArrayList<String> objectIds, ArrayList<String> descreptions
+                , ArrayList<Double> latitudes, ArrayList<Double> longitudes) {
+            this.images = images;
+            this.titles = titles;
+            this.preices = preices;
+            this.context = context;
+            this.objectIds = objectIds;
+            this.descreptions = descreptions;
+            this.latitudes = latitudes;
+            this.longitudes = longitudes;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolderSelling onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_selling, parent, false);
+            ViewHolderSelling viewHolder = new ViewHolderSelling(view);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolderSelling holder, final int position) {
+
+            Glide.with(context)
+                    .asBitmap()
+                    .load(images.get(position))
+                    .into(holder.imageView);
+            holder.title.setText(titles.get(position));
+            holder.preise.setText(preices.get(position));
+            holder.objectId = objectIds.get(position);
+            holder.descreption = descreptions.get(position);
+            holder.latitude = latitudes.get(position);
+            holder.longitude = longitudes.get(position);
+
+            if (holder.imageView != null) {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), displayItem.class);
+                        intent.putExtra("objectId", objectIdes.get(position));
+                        intent.putExtra("title", titles.get(position));
+                        intent.putExtra("price", preices.get(position));
+                        intent.putExtra("descreption", descreptions.get(position));
+                        intent.putExtra("latitude", latitudes.get(position));
+                        intent.putExtra("longitude", longitudes.get(position));
+
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        public class ViewHolderSelling extends RecyclerView.ViewHolder {
+            String objectId, descreption;
+            ImageView imageView;
+            TextView title;
+            TextView preise;
+            CardView parentLayout;
+            double latitude, longitude;
+
+            public ViewHolderSelling(@NonNull View itemView) {
+                super(itemView);
+                imageView = itemView.findViewById(R.id.imageViewItemInRecyclerView_selling);
+                title = itemView.findViewById(R.id.txttitleInRecyclerView_selling);
+                preise = itemView.findViewById(R.id.txtpreisInRecyclerView_selling);
+                parentLayout = itemView.findViewById(R.id.parent_layout_In_RecyclerView_selling);
+
+            }
+        }
+    }
+
+    private void inintObjectsInRecyclerView() {
+        int c = 0;
+        for (ParseObject object : main_menu_Activity.objectList) {
+            ArrayList<String> objectPhotos = new ArrayList<>();
+            c++;
+            final ParseFile photo1 = (ParseFile) object.get("photo1");
+            imagesUrls.add(photo1.getUrl());
+            objectPhotos.add(photo1.getUrl());
+            titles.add(object.getString("title"));
+            preises.add(object.getInt("price") + " " + object.getString("currency"));
+            descreptions.add(object.getString("descreption"));
+            objectIdes.add(object.getObjectId());
+            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
+            latitudes.add(itemLocation.getLatitude());
+            longitudes.add(itemLocation.getLongitude());
+
+            final ParseFile photo2 = (ParseFile) object.get("photo2");
+            if (photo2 != null) objectPhotos.add(photo2.getUrl());
+            final ParseFile photo3 = (ParseFile) object.get("photo3");
+            if (photo3 != null) objectPhotos.add(photo3.getUrl());
+            final ParseFile photo4 = (ParseFile) object.get("photo4");
+            if (photo4 != null) objectPhotos.add(photo4.getUrl());
+            final ParseFile photo5 = (ParseFile) object.get("photo5");
+            if (photo5 != null) objectPhotos.add(photo5.getUrl());
+
+            main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
+        }
+
+        Toast.makeText(getContext(), String.valueOf(c), Toast.LENGTH_LONG).show();
+        inintRecyclerVIew();
+
+    }
+
+    private void inintRecyclerVIew() {
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
+        recyclerViewSelling.setAdapter(adapter);
+        recyclerViewSelling.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
 
     @Override
     public void onClick(View v) {

@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myapps.easybusiness.ui.main.SectionsPagerAdapter;
@@ -45,7 +46,7 @@ import java.util.List;
 
 public class userTapped extends AppCompatActivity {
     ImageView profilePhoto;
-
+    TextView txtUserName ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class userTapped extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
         profilePhoto = findViewById(R.id.imageViewUserPhoto);
+        txtUserName = findViewById(R.id.txtuserNameInUser);
+        txtUserName.setText(ParseUser.getCurrentUser().getUsername());
         refreshPage();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

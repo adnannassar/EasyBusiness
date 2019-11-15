@@ -34,7 +34,7 @@
                 app:srcCompat="@drawable/left_arrow_green_small" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtuserNameInUser"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
                 android:layout_alignParentStart="true"

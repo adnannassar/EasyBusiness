@@ -58,8 +58,8 @@ public class main_menu_Activity extends AppCompatActivity {
     // ArrayList<Bitmap> bitmapArrayList;
 
     //new way
-    final static List<ParseObject> objectList = MainActivity.objectArrayList;
-    static LinkedHashMap<String, ArrayList<String>> objectsMap = new LinkedHashMap<>();
+    public final static List<ParseObject> objectList = MainActivity.objectArrayList;
+    public static LinkedHashMap<String, ArrayList<String>> objectsMap = new LinkedHashMap<>();
 
 
     // vars
@@ -91,7 +91,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
         //fillGridLayoutMainMenu();
         //fillGridLayoutMainMenuFromArray();
-        inintImagesBitMaps();
+        inintObjectsInRecyclerView();
 
         //Search Function
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -705,7 +705,7 @@ public class main_menu_Activity extends AppCompatActivity {
     }
 
 
-    private void inintImagesBitMaps() {
+    private void inintObjectsInRecyclerView() {
         int c = 0;
         for (ParseObject object : objectList) {
             ArrayList<String> objectPhotos = new ArrayList<>();
