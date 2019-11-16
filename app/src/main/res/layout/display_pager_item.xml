@@ -13,9 +13,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         app:fadeDuration="1000"
-        fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/appname"
-        fresco:placeholderImageScaleType="fitCenter" />
+        fresco:actualImageScaleType="focusCrop" />
 
 
     <!--

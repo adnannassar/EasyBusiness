@@ -377,7 +377,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Item");
-                                            if (getAdapterPosition() <= itemArrayList.size()) {
+                                            if (getAdapterPosition() <= itemArrayList.size() && getAdapterPosition()!=RecyclerView.NO_POSITION) {
                                                 query.whereEqualTo("objectId", itemArrayList.get(getAdapterPosition()).getObjectId());
                                                 query.findInBackground(new FindCallback<ParseObject>() {
                                                     @Override
