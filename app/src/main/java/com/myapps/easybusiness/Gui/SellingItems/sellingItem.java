@@ -1,10 +1,9 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.SellingItems;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.cardview.widget.CardView;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,8 +22,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,12 +34,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.myapps.easybusiness.FachLogic.CategoryItem;
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -106,7 +104,7 @@ public class sellingItem extends AppCompatActivity {
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDescritopn = findViewById(R.id.editTextDescrition);
         editTextPrice = findViewById(R.id.EditTextPrice);
-        btnSell = findViewById(R.id.btnSellTheITem);
+        btnSell = findViewById(R.id.btnPrivateMessage);
 
         // Activate the button for sell because i deactivate it after one time sell to avoid that duplication of Items in Server
         btnSell.setEnabled(true);
@@ -166,13 +164,13 @@ public class sellingItem extends AppCompatActivity {
 
     // Buttons Functions
     public void go_back_to_mainMenu(View view) {
-        Intent intent = new Intent(this, main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
 
@@ -353,7 +351,7 @@ public class sellingItem extends AppCompatActivity {
                 }
             });
             btnSell.setEnabled(false);
-            Intent intent = new Intent(this, main_menu_Activity.class);
+            Intent intent = new Intent(this, Main_menu_Activity.class);
             startActivity(intent);
 
         } else {

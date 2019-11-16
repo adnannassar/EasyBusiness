@@ -1,7 +1,7 @@
-package com.myapps.easybusiness.ui;
+package com.myapps.easybusiness.Gui.User;
 
 import com.bumptech.glide.Glide;
-import com.myapps.easybusiness.Item;
+import com.myapps.easybusiness.FachLogic.Item;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,9 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapps.easybusiness.R;
-import com.myapps.easybusiness.displayItem;
-import com.myapps.easybusiness.main_menu_Activity;
-import com.myapps.easybusiness.ui.main.ItemForRecyclerView;
+import com.myapps.easybusiness.Gui.DisplyItems.DisplyItemsActivity;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
+import com.myapps.easybusiness.FachLogic.ItemForRecyclerView;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -44,7 +44,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
     // vars
     private ArrayList<String> imagesUrls = new ArrayList<>();
     RecyclerView recyclerViewSelling;
-    List<ParseObject> parseObjects = main_menu_Activity.objectList;
+    List<ParseObject> parseObjects = Main_menu_Activity.objectList;
     ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager myLayoutManager;
@@ -243,7 +243,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), displayItem.class);
+                        Intent intent = new Intent(getContext(), DisplyItemsActivity.class);
                         intent.putExtra("objectId", currentItem.getObjectId());
                         intent.putExtra("title", currentItem.getTitle());
                         intent.putExtra("price", currentItem.getPreis());
@@ -355,7 +355,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
                     object.getString("title"), object.getInt("price"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
-            main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
+            Main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
         }
 
         Toast.makeText(getContext(), String.valueOf(c), Toast.LENGTH_LONG).show();

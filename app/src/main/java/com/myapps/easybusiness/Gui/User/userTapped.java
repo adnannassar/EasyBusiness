@@ -1,4 +1,4 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.User;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,7 +21,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.myapps.easybusiness.ui.main.SectionsPagerAdapter;
+
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.Login_SignUp.login;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -67,13 +70,13 @@ public class userTapped extends AppCompatActivity {
     }
 
     public void go_back_to_mainMenu(View view) {
-        Intent intent = new Intent(this, main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
 

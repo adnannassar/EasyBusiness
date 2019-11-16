@@ -1,4 +1,4 @@
-package com.myapps.easybusiness.ui.main;
+package com.myapps.easybusiness.Gui.User;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

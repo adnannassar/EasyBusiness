@@ -1,19 +1,20 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.DisplyItems;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 import androidx.viewpager.widget.PagerAdapter;
-
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.squareup.picasso.Picasso;
-
+import com.myapps.easybusiness.R;
 import java.util.ArrayList;
+
 
 public class ItemsPager extends PagerAdapter {
 
@@ -36,7 +37,7 @@ public class ItemsPager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-         View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
+         final View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
          ImageView imageView = view.findViewById(R.id.imageItem);
          Uri uri = Uri.parse(getImageAt(position));
          imageView.setImageURI(uri);
@@ -45,6 +46,15 @@ public class ItemsPager extends PagerAdapter {
         // imageView.setImageBitmap(getImageAt(position));
         // imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
         container.addView(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(context.getApplicationContext(),"hi",Toast.LENGTH_SHORT).show();
+                DisplyItemsActivity.makeViewPagerBig();
+            }
+        });
         return view;
     }
 
@@ -77,6 +87,12 @@ public class ItemsPager extends PagerAdapter {
     private String getImageAt(int position) {
         return bitmapArrayLsit.get(position);
     }
+
+
+
+
 }
+
+
 
 

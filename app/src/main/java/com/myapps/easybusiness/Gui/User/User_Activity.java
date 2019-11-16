@@ -1,15 +1,17 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.Login_SignUp.login;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.ParseUser;
 
-public class user extends AppCompatActivity {
+public class User_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +23,17 @@ public class user extends AppCompatActivity {
 
     public void logout(View view) {
         ParseUser.logOut();
-        Intent intent = new Intent(this,login.class);
+        Intent intent = new Intent(this, login.class);
         startActivity(intent);
     }
 
     public void go_back_to_mainMenu(View view) {
-        Intent intent = new Intent(this,main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, main_menu_Activity.class);
+        Intent intent = new Intent(this, Main_menu_Activity.class);
         startActivity(intent);
     }
 }

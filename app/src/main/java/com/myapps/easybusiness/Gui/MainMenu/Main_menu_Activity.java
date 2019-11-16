@@ -1,28 +1,17 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.MainMenu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.style.LeadingMarginSpan;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.myapps.easybusiness.ui.main.ItemForRecyclerView;
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.SellingItems.sellingItem;
+import com.myapps.easybusiness.Gui.DisplyItems.DisplyItemsActivity;
+import com.myapps.easybusiness.Gui.User.userTapped;
+import com.myapps.easybusiness.FachLogic.ItemForRecyclerView;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -48,7 +41,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class main_menu_Activity extends AppCompatActivity {
+public class Main_menu_Activity extends AppCompatActivity {
 
 
     //vars
@@ -233,7 +226,7 @@ public class main_menu_Activity extends AppCompatActivity {
                                 cardView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getApplicationContext(), displayItem.class);
+                                        Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
                                         intent.putExtra("title", object.getString("title"));
                                         intent.putExtra("descreption", object.getString("descreption"));
                                         intent.putExtra("price", object.getInt("price"));
@@ -390,7 +383,7 @@ public class main_menu_Activity extends AppCompatActivity {
                                             cardView.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    Intent intent = new Intent(getApplicationContext(), displayItem.class);
+                                                    Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
                                                     intent.putExtra("title", object.getString("title"));
                                                     intent.putExtra("descreption", object.getString("descreption"));
                                                     intent.putExtra("price", object.getInt("price"));
@@ -545,7 +538,7 @@ public class main_menu_Activity extends AppCompatActivity {
                                         cardView.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent intent = new Intent(getApplicationContext(), displayItem.class);
+                                                Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
                                                 intent.putExtra("title", object.getString("title"));
                                                 intent.putExtra("descreption", object.getString("descreption"));
                                                 intent.putExtra("price", object.getInt("price"));
@@ -652,7 +645,7 @@ public class main_menu_Activity extends AppCompatActivity {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), displayItem.class);
+                        Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
                         intent.putExtra("objectId", currentItem.getObjectId());
                         intent.putExtra("title", currentItem.getTitle());
                         intent.putExtra("price", currentItem.getPreis());
@@ -748,7 +741,7 @@ public class main_menu_Activity extends AppCompatActivity {
             itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
                     object.getString("title"), object.getInt("price"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
-            main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
+            Main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
         }
 
         Toast.makeText(getApplicationContext(), String.valueOf(c), Toast.LENGTH_LONG).show();

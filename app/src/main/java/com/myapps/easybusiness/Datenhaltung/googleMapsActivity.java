@@ -1,4 +1,4 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Datenhaltung;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.myapps.easybusiness.R;
 
 public class googleMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -31,8 +32,8 @@ public class googleMapsActivity extends FragmentActivity implements OnMapReadyCa
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * If Google Play services is not installed on the device, the User_Activity will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the User_Activity has
      * installed Google Play services and returned to the app.
      */
     @Override

@@ -1,54 +1,44 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.DisplyItems;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.android.gms.common.internal.Objects;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.ui.IconGenerator;
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.shashank.sony.fancytoastlib.FancyToast;
 
-import java.io.FileInputStream;
-
-import bolts.Task;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator;
 
-public class displayItem extends AppCompatActivity implements OnMapReadyCallback {
+public class DisplyItemsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private ItemsPager myPager;
     private MapView mMapView;
     private static final String MAPVIEW_BUNDLE_KEY = "AIzaSyBd3YFdw4hdmZ2JuikJlJFphPSmDpbdT34";
-    TextView txtTitle, txtPreis, txtDescreption, textUsername;
-    CircleImageView imageViewUserPhotoInDisplayItem;
+    private TextView txtTitle, txtPreis, txtDescreption, textUsername;
+    private CircleImageView imageViewUserPhotoInDisplayItem;
+    private static ScrollView scrollView;
+    private static Button btnPrivateMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +46,13 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         getSupportActionBar().hide();
         setContentView(R.layout.activity_display_item);
         Fresco.initialize(this);
-        myPager = new ItemsPager(this, main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
+        scrollView = findViewById(R.id.scrollViewDisplyItem);
+        btnPrivateMessage = findViewById(R.id.btnPrivateMessage);
+        myPager = new ItemsPager(this, Main_menu_Activity.objectsMap.get(getIntent().getStringExtra("objectId")));
         viewPager = findViewById(R.id.view_pager_item);
         viewPager.setAdapter(myPager);
+        viewPager.setPageTransformer(true, new ZoomOutTransformation());
+
         circleIndicator = findViewById(R.id.circle);
         circleIndicator.setViewPager(viewPager);
         txtTitle = findViewById(R.id.txtTitle);
@@ -87,6 +81,44 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
+    }
+
+
+    public static void makeViewPagerBig() {
+        scrollView.setVisibility(View.GONE);
+        btnPrivateMessage.setVisibility(View.GONE);
+    }
+
+    public static void makeViewPagerSmall() {
+    }
+
+
+    class ZoomOutTransformation implements ViewPager.PageTransformer {
+
+        private static final float MIN_SCALE = 0.65f;
+        private static final float MIN_ALPHA = 0.3f;
+
+        @Override
+        public void transformPage(View page, float position) {
+
+            if (position < -1) {  // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                page.setAlpha(0);
+
+            } else if (position <= 1) { // [-1,1]
+
+                page.setScaleX(Math.max(MIN_SCALE, 1 - Math.abs(position)));
+                page.setScaleY(Math.max(MIN_SCALE, 1 - Math.abs(position)));
+                page.setAlpha(Math.max(MIN_ALPHA, 1 - Math.abs(position)));
+
+            } else {  // (1,+Infinity]
+                // This page is way off-screen to the right.
+                page.setAlpha(0);
+
+            }
+
+
+        }
     }
 
     @Override
@@ -148,6 +180,6 @@ public class displayItem extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void message(View view) {
-
+        Toast.makeText(this, "This Function will be implemented soon :) ", Toast.LENGTH_SHORT).show();
     }
 }

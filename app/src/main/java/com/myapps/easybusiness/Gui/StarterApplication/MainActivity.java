@@ -1,28 +1,19 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.StarterApplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
+import com.myapps.easybusiness.Datenhaltung.StarterApplication;
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.Login_SignUp.login;
 import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     StarterApplication parseStarter;

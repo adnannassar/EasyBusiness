@@ -1,4 +1,4 @@
-package com.myapps.easybusiness.ui;
+package com.myapps.easybusiness.Gui.User;
 
 import android.content.Context;
 import android.os.Bundle;

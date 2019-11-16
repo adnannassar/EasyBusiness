@@ -1,4 +1,4 @@
-package com.myapps.easybusiness.ui.main;
+package com.myapps.easybusiness.Gui.User;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

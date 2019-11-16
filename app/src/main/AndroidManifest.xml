@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".StarterApplication"
+        android:name=".Datenhaltung.StarterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,21 +37,21 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".googleMapsActivity"
+            android:name=".Datenhaltung.googleMapsActivity"
             android:label="@string/title_activity_google_maps">
 
         </activity>
-        <activity android:name=".displayItem" />
-        <activity android:name=".itemsInListViewItem" />
+        <activity android:name=".Gui.DisplyItems.DisplyItemsActivity" />
+        <activity android:name=".FachLogic.itemsInListViewItem" />
         <activity
-            android:name=".userTapped"
+            android:name=".Gui.User.userTapped"
             android:label="@string/title_activity_user_tapped"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".sellingItem" />
-        <activity android:name=".user" />
-        <activity android:name=".login" />
-        <activity android:name=".main_menu_Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Gui.SellingItems.sellingItem" />
+        <activity android:name=".Gui.User.User_Activity" />
+        <activity android:name=".Gui.Login_SignUp.login" />
+        <activity android:name=".Gui.MainMenu.Main_menu_Activity" />
+        <activity android:name=".Gui.StarterApplication.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

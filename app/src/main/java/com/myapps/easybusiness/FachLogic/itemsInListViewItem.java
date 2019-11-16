@@ -1,8 +1,10 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.FachLogic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.myapps.easybusiness.R;
 
 public class itemsInListViewItem extends AppCompatActivity {
 

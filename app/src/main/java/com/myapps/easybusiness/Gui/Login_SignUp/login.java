@@ -1,4 +1,4 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Gui.Login_SignUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.myapps.easybusiness.Datenhaltung.StarterApplication;
+import com.myapps.easybusiness.R;
+import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
@@ -67,7 +71,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Vi
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usersArrayList);
 
 
-        // if user logged in
+        // if User_Activity logged in
         if(ParseUser.getCurrentUser() != null){
             showMainmenu();
         }
@@ -156,7 +160,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Vi
     }
 
     public void showMainmenu(){
-        users_list_intent = new Intent(getApplicationContext(), main_menu_Activity.class);
+        users_list_intent = new Intent(getApplicationContext(), Main_menu_Activity.class);
         startActivity(users_list_intent);
     }
 

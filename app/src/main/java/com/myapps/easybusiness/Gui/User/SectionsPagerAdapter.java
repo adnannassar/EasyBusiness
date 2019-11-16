@@ -1,19 +1,14 @@
-package com.myapps.easybusiness.ui.main;
+package com.myapps.easybusiness.Gui.User;
 
 import android.content.Context;
-import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.myapps.easybusiness.R;
-import com.myapps.easybusiness.ui.Fragment_Messages;
-import com.myapps.easybusiness.ui.Fragment_Profile;
-import com.myapps.easybusiness.ui.Fragment_Selling;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

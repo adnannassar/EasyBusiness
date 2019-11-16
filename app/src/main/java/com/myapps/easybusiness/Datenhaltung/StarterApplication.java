@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.Datenhaltung;
 
 import android.app.Application;
 import android.content.Context;
@@ -157,7 +157,7 @@ public class StarterApplication extends Application {
 
     public void updateObjectInParseServer() {
         ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Score");
-        // using the user id "Wk7AlKkYma" will give us only the object with this id back
+        // using the User_Activity id "Wk7AlKkYma" will give us only the object with this id back
         parseQuery.getInBackground("dubHda9E3Q", new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {

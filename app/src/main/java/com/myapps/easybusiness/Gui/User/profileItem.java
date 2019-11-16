@@ -1,4 +1,4 @@
-package com.myapps.easybusiness.ui;
+package com.myapps.easybusiness.Gui.User;
 
 public class profileItem {
     private String name , descreption;

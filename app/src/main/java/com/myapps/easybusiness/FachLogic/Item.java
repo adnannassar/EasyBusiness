@@ -1,4 +1,4 @@
-package com.myapps.easybusiness;
+package com.myapps.easybusiness.FachLogic;
 
 public class Item {
 
