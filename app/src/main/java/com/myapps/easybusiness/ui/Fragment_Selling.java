@@ -2,53 +2,38 @@ package com.myapps.easybusiness.ui;
 
 import com.bumptech.glide.Glide;
 import com.myapps.easybusiness.Item;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.myapps.easybusiness.MainActivity;
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.displayItem;
 import com.myapps.easybusiness.main_menu_Activity;
 import com.myapps.easybusiness.ui.main.ItemForRecyclerView;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,37 +220,12 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
      */
 
     public  class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
-
-        private ArrayList<String> images;
-        private ArrayList<String> titles;
-        private ArrayList<String> preices;
-        private ArrayList<String> objectIds;
-        private ArrayList<String> descreptions;
-        private ArrayList<Double> latitudes;
-        private ArrayList<Double> longitudes;
-        private Context context;
-
-
-        //new Way
         ArrayList<ItemForRecyclerView> itemArrayList ;
         public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList){
             this.itemArrayList = itemArrayList;
         }
 
 
-        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices,
-                                   ArrayList<String> objectIds, ArrayList<String> descreptions
-                , ArrayList<Double> latitudes, ArrayList<Double> longitudes) {
-            this.images = images;
-            this.titles = titles;
-            this.preices = preices;
-            this.context = context;
-            this.objectIds = objectIds;
-            this.descreptions = descreptions;
-            this.latitudes = latitudes;
-            this.longitudes = longitudes;
-
-        }
 
         @NonNull
         @Override
@@ -277,38 +237,6 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolderSelling holder, final int position) {
-            /*
-            Glide.with(context)
-                    .asBitmap()
-                    .load(images.get(position))
-                    .into(holder.imageView);
-            holder.title.setText(titles.get(position));
-            holder.preise.setText(preices.get(position));
-            holder.objectId = objectIds.get(position);
-            holder.descreption = descreptions.get(position);
-            holder.latitude = latitudes.get(position);
-            holder.longitude = longitudes.get(position);
-
-            if (holder.imageView != null) {
-                holder.imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), displayItem.class);
-                        intent.putExtra("objectId", objectIdes.get(position));
-                        intent.putExtra("title", titles.get(position));
-                        intent.putExtra("price", preices.get(position));
-                        intent.putExtra("descreption", descreptions.get(position));
-                        intent.putExtra("latitude", latitudes.get(position));
-                        intent.putExtra("longitude", longitudes.get(position));
-
-                        startActivity(intent);
-                    }
-                });
-            } else {
-                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
-            }
-            */
-            //new Way
             final ItemForRecyclerView currentItem = itemArrayList.get(position);
             Glide.with(getContext())
                     .asBitmap()
@@ -336,7 +264,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                     }
                 });
             } else {
-                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "NULL", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -376,7 +304,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                                     .setNegativeButton(android.R.string.no, null)
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface arg0, int arg1) {
-                                            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Item");
+                                            ParseQuery<ParseObject> query = new ParseQuery<>("Item");
                                             if (getAdapterPosition() <= itemArrayList.size() && getAdapterPosition()!=RecyclerView.NO_POSITION) {
                                                 query.whereEqualTo("objectId", itemArrayList.get(getAdapterPosition()).getObjectId());
                                                 query.findInBackground(new FindCallback<ParseObject>() {
@@ -459,11 +387,6 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         myAdapter = new RecyclerViewAdapter(itemArrayList);
         recyclerViewSelling.setLayoutManager(myLayoutManager);
         recyclerViewSelling.setAdapter(myAdapter);
-
-
-       // RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
-       // recyclerViewSelling.setAdapter(adapter);
-      //  recyclerViewSelling.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 

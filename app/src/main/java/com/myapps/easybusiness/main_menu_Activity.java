@@ -59,8 +59,8 @@ public class main_menu_Activity extends AppCompatActivity {
     // ArrayList<Bitmap> bitmapArrayList;
 
     //new way
-    public  static List<ParseObject> objectList ;
-    public  static LinkedHashMap<String, ArrayList<String>> objectsMap ;
+    public static List<ParseObject> objectList;
+    public static LinkedHashMap<String, ArrayList<String>> objectsMap;
 
 
     // vars
@@ -100,7 +100,7 @@ public class main_menu_Activity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                fillGridLayoutMainMenuAfterSearch(query);
+
                 return true;
             }
 
@@ -112,7 +112,7 @@ public class main_menu_Activity extends AppCompatActivity {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                refreshPage();
+
                 return true;
             }
         });
@@ -470,7 +470,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     }
-    */
+
 
     public void fillGridLayoutMainMenuAfterSearch(String searchQuery) {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
@@ -577,6 +577,7 @@ public class main_menu_Activity extends AppCompatActivity {
         });
 
     }
+*/
 
     public void refreshPage() {
         finish();
