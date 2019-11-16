@@ -38,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseAnalytics;
+import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -58,8 +59,8 @@ public class main_menu_Activity extends AppCompatActivity {
     // ArrayList<Bitmap> bitmapArrayList;
 
     //new way
-    public final static List<ParseObject> objectList = MainActivity.objectArrayList;
-    public static LinkedHashMap<String, ArrayList<String>> objectsMap = new LinkedHashMap<>();
+    public  static List<ParseObject> objectList ;
+    public  static LinkedHashMap<String, ArrayList<String>> objectsMap ;
 
 
     // vars
@@ -86,9 +87,11 @@ public class main_menu_Activity extends AppCompatActivity {
         btnUser = findViewById(R.id.btnUser);
         gridLayoutMainMenu = findViewById(R.id.gridLayoutMainMenu);
 
+        objectList = getObjects();
+        objectsMap = new LinkedHashMap<>();
 
         initMainMenu();
-
+        getObjects();
         //fillGridLayoutMainMenu();
         //fillGridLayoutMainMenuFromArray();
         inintObjectsInRecyclerView();
@@ -582,7 +585,9 @@ public class main_menu_Activity extends AppCompatActivity {
 
     public void discover(View view) {
         refreshPage();
+
     }
+
     /*
     public class objectFromServer {
         int id;
@@ -706,6 +711,7 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     private void inintObjectsInRecyclerView() {
+
         int c = 0;
         for (ParseObject object : objectList) {
             ArrayList<String> objectPhotos = new ArrayList<>();
@@ -732,17 +738,28 @@ public class main_menu_Activity extends AppCompatActivity {
 
             objectsMap.put(object.getObjectId(), objectPhotos);
         }
-
-        Toast.makeText(this, String.valueOf(c), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(c), Toast.LENGTH_LONG).show();
         inintRecyclerVIew();
 
     }
 
     private void inintRecyclerVIew() {
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
+        recyclerView.setHasFixedSize(true);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
+    public static List<ParseObject> getObjects() {
+        ParseQuery<ParseObject> query = new ParseQuery<>("Item");
+        query.orderByAscending("createdAt");
+
+        try {
+            return query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

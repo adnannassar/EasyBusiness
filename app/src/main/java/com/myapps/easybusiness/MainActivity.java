@@ -13,10 +13,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,8 +27,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     StarterApplication parseStarter;
     Animation zoomin;
-    public static List<ParseObject> objectArrayList = getObjects();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,14 +108,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    static public List<ParseObject> getObjects() {
-        ParseQuery<ParseObject> query = new ParseQuery<>("Item");
-        query.orderByAscending("createdAt");
-        try {
-            return query.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }

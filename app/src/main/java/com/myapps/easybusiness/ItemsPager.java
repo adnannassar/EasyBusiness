@@ -38,7 +38,7 @@ public class ItemsPager extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
          View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
          ImageView imageView = view.findViewById(R.id.imageItem);
-            Uri uri = Uri.parse(getImageAt(position));
+         Uri uri = Uri.parse(getImageAt(position));
          imageView.setImageURI(uri);
         // Picasso.with(context).load(getImageAt(position)).into(imageView);
          //Glide.with(context).load(getImageAt(position)).into(imageView);

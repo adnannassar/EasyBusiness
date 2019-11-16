@@ -24,6 +24,7 @@
             android:layout_gravity="end"
             android:clickable="true"
             android:background="@drawable/delete_sign_red_reounded"
+            android:id="@+id/btnDeleteItem"
             >
 
         </Button>

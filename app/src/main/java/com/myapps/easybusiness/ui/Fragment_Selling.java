@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,18 +37,18 @@ import com.myapps.easybusiness.MainActivity;
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.displayItem;
 import com.myapps.easybusiness.main_menu_Activity;
+import com.myapps.easybusiness.ui.main.ItemForRecyclerView;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +62,17 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
     private ArrayList<Double> latitudes = new ArrayList<>();
     private ArrayList<Double> longitudes = new ArrayList<>();
     RecyclerView recyclerViewSelling;
+    List<ParseObject> parseObjects = main_menu_Activity.objectList;
 
-    public Fragment_Selling() { }
+    // new Way
+    ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
+    RecyclerView.Adapter myAdapter;
+    RecyclerView.LayoutManager myLayoutManager;
+
+
+    public Fragment_Selling() {
+
+    }
 
 
     @Nullable
@@ -70,13 +80,17 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selling_layout, container, false);
         recyclerViewSelling = view.findViewById(R.id.layoutSelling);
-     //  fillLinearLayoutSelling();
+        // new Way
+
+
+        //  fillLinearLayoutSelling();
         inintObjectsInRecyclerView();
         return view;
 
     }
 
 
+    /*
     public void fillLinearLayoutSelling() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
@@ -218,7 +232,9 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
 
     }
 
-    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
+     */
+
+    public  class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
 
         private ArrayList<String> images;
         private ArrayList<String> titles;
@@ -227,8 +243,15 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         private ArrayList<String> descreptions;
         private ArrayList<Double> latitudes;
         private ArrayList<Double> longitudes;
-
         private Context context;
+
+
+        //new Way
+        ArrayList<ItemForRecyclerView> itemArrayList ;
+        public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList){
+            this.itemArrayList = itemArrayList;
+        }
+
 
         public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices,
                                    ArrayList<String> objectIds, ArrayList<String> descreptions
@@ -241,6 +264,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             this.descreptions = descreptions;
             this.latitudes = latitudes;
             this.longitudes = longitudes;
+
         }
 
         @NonNull
@@ -252,8 +276,8 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolderSelling holder, final int position) {
-
+        public void onBindViewHolder(@NonNull final ViewHolderSelling holder, final int position) {
+            /*
             Glide.with(context)
                     .asBitmap()
                     .load(images.get(position))
@@ -283,20 +307,56 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             } else {
                 Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
             }
+            */
+            //new Way
+            final ItemForRecyclerView currentItem = itemArrayList.get(position);
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(currentItem.getImageView())
+                    .into(holder.imageView);
+            holder.title.setText(currentItem.getTitle());
+            holder.preise.setText(String.valueOf(currentItem.getPreis()));
+            holder.objectId = currentItem.getObjectId();
+            holder.descreption = currentItem.getDescreption();
+            holder.latitude = currentItem.getLatitude();
+            holder.longitude = currentItem.getLongitude();
+            if (holder.imageView != null) {
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), displayItem.class);
+                        intent.putExtra("objectId", currentItem.getObjectId());
+                        intent.putExtra("title", currentItem.getTitle());
+                        intent.putExtra("price", currentItem.getPreis());
+                        intent.putExtra("descreption", currentItem.getDescreption());
+                        intent.putExtra("latitude", currentItem.getLatitude());
+                        intent.putExtra("longitude", currentItem.getLongitude());
+
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         @Override
         public int getItemCount() {
-            return images.size();
+            // return parseObjects.size();
+            // new Way
+            return  itemArrayList.size();
+
         }
 
-        public class ViewHolderSelling extends RecyclerView.ViewHolder {
+        public  class ViewHolderSelling extends RecyclerView.ViewHolder {
             String objectId, descreption;
             ImageView imageView;
             TextView title;
             TextView preise;
             CardView parentLayout;
             double latitude, longitude;
+            Button btnDelete;
 
             public ViewHolderSelling(@NonNull View itemView) {
                 super(itemView);
@@ -304,14 +364,61 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                 title = itemView.findViewById(R.id.txttitleInRecyclerView_selling);
                 preise = itemView.findViewById(R.id.txtpreisInRecyclerView_selling);
                 parentLayout = itemView.findViewById(R.id.parent_layout_In_RecyclerView_selling);
+                btnDelete = itemView.findViewById(R.id.btnDeleteItem);
+
+                if (btnDelete != null) {
+                    btnDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Really Delete?")
+                                    .setMessage("Are you sure you want to Delete?")
+                                    .setNegativeButton(android.R.string.no, null)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Item");
+                                            if (getAdapterPosition() <= itemArrayList.size()) {
+                                                query.whereEqualTo("objectId", itemArrayList.get(getAdapterPosition()).getObjectId());
+                                                query.findInBackground(new FindCallback<ParseObject>() {
+                                                    @Override
+                                                    public void done(List<ParseObject> objects, ParseException e) {
+                                                        if (e == null && objects != null && !objects.isEmpty()) {
+                                                            for (ParseObject parseObject : objects) {
+                                                                parseObject.deleteInBackground(new DeleteCallback() {
+                                                                    @Override
+                                                                    public void done(ParseException e) {
+                                                                        if (e == null) {
+                                                                            itemArrayList.remove(getAdapterPosition());
+                                                                            notifyItemRemoved(getAdapterPosition());
+                                                                            notifyItemRangeChanged(getAdapterPosition(), itemArrayList.size());
+                                                                            Toast.makeText(getContext(), "Item Deleted !", Toast.LENGTH_SHORT).show();
+                                                                        } else {
+                                                                            Toast.makeText(getContext(), "Item Could not be deleted", Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(getContext(), "Server Error\n item not found in System!", Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }).create().show();
+                        }
+                    });
+                }
 
             }
+
         }
     }
 
     private void inintObjectsInRecyclerView() {
         int c = 0;
-        for (ParseObject object : main_menu_Activity.objectList) {
+        for (ParseObject object :parseObjects) {
             ArrayList<String> objectPhotos = new ArrayList<>();
             c++;
             final ParseFile photo1 = (ParseFile) object.get("photo1");
@@ -324,6 +431,10 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
             latitudes.add(itemLocation.getLatitude());
             longitudes.add(itemLocation.getLongitude());
+
+            // new Way
+            itemArrayList.add(new ItemForRecyclerView(object.getObjectId(),object.getString("descreption"),photo1.getUrl(),
+                    object.getString("title"),object.getInt("price"),itemLocation.getLatitude(),itemLocation.getLongitude()));
 
             final ParseFile photo2 = (ParseFile) object.get("photo2");
             if (photo2 != null) objectPhotos.add(photo2.getUrl());
@@ -343,10 +454,16 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
     }
 
     private void inintRecyclerVIew() {
+        recyclerViewSelling.setHasFixedSize(true);
+        myLayoutManager = new LinearLayoutManager(getContext());
+        myAdapter = new RecyclerViewAdapter(itemArrayList);
+        recyclerViewSelling.setLayoutManager(myLayoutManager);
+        recyclerViewSelling.setAdapter(myAdapter);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
-        recyclerViewSelling.setAdapter(adapter);
-        recyclerViewSelling.setLayoutManager(new LinearLayoutManager(getContext()));
+
+       // RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
+       // recyclerViewSelling.setAdapter(adapter);
+      //  recyclerViewSelling.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 
@@ -396,4 +513,6 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             return convertView;
         }
     }
+
+
 }
