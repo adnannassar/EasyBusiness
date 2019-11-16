@@ -26,19 +26,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.GridView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.parse.FindCallback;
-import com.parse.GetDataCallback;
+import com.myapps.easybusiness.ui.main.ItemForRecyclerView;
 import com.parse.ParseAnalytics;
-import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -50,27 +49,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class main_menu_Activity extends AppCompatActivity {
+
+
+    //vars
     SearchView searchView;
     static Button btnDiscover, btnSell, btnUser;
-    GridLayout gridLayoutMainMenu;
-
-    //old way
-    // static ArrayList<objectFromServer> objectsArrayList = new ArrayList<>();
-    // ArrayList<Bitmap> bitmapArrayList;
-
-    //new way
-    public static List<ParseObject> objectList;
+    public static List<ParseObject> objectList = getObjects();
     public static LinkedHashMap<String, ArrayList<String>> objectsMap;
-
-
-    // vars
     private ArrayList<String> imagesUrls = new ArrayList<>();
-    private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<String> preises = new ArrayList<>();
-    private ArrayList<String> objectIdes = new ArrayList<>();
-    private ArrayList<String> descreptions = new ArrayList<>();
-    private ArrayList<Double> latitudes = new ArrayList<>();
-    private ArrayList<Double> longitudes = new ArrayList<>();
+    RecyclerView recyclerViewSelling;
+    ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
+    RecyclerViewAdapter myAdapter;
+    RecyclerView.LayoutManager myLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,32 +70,38 @@ public class main_menu_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-
+        recyclerViewSelling = findViewById(R.id.main_recycler_view);
         searchView = findViewById(R.id.searchview);
         btnDiscover = findViewById(R.id.btnDiscover);
         btnSell = findViewById(R.id.btnSell);
         btnUser = findViewById(R.id.btnUser);
-        gridLayoutMainMenu = findViewById(R.id.gridLayoutMainMenu);
 
         objectList = getObjects();
         objectsMap = new LinkedHashMap<>();
 
         initMainMenu();
-        getObjects();
-        //fillGridLayoutMainMenu();
-        //fillGridLayoutMainMenuFromArray();
         inintObjectsInRecyclerView();
 
-        //Search Function
+        //Search Functions
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                return true;
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                myAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -156,6 +152,7 @@ public class main_menu_Activity extends AppCompatActivity {
                         System.exit(1);
                     }
                 }).create().show();
+
     }
 
     /*
@@ -619,30 +616,16 @@ public class main_menu_Activity extends AppCompatActivity {
         return null;
     }
     */
-    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
 
-        private ArrayList<String> images;
-        private ArrayList<String> titles;
-        private ArrayList<String> preices;
-        private ArrayList<String> objectIds;
-        private ArrayList<String> descreptions;
-        private ArrayList<Double> latitudes;
-        private ArrayList<Double> longitudes;
+        ArrayList<ItemForRecyclerView> itemArrayList;
+        ArrayList<ItemForRecyclerView> itemArrayListFull; // we need this list for search
 
-        private Context context;
-
-        public RecyclerViewAdapter(Context context, ArrayList<String> images, ArrayList<String> titles, ArrayList<String> preices,
-                                   ArrayList<String> objectIds, ArrayList<String> descreptions
-                , ArrayList<Double> latitudes, ArrayList<Double> longitudes) {
-            this.images = images;
-            this.titles = titles;
-            this.preices = preices;
-            this.context = context;
-            this.objectIds = objectIds;
-            this.descreptions = descreptions;
-            this.latitudes = latitudes;
-            this.longitudes = longitudes;
+        public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList) {
+            this.itemArrayList = itemArrayList;
+            itemArrayListFull = new ArrayList<>(itemArrayList); // this is the copy of list, if we write itemArrayListFull  = itemArrayList then we have one pointer to both lists
         }
+
 
         @NonNull
         @Override
@@ -654,42 +637,74 @@ public class main_menu_Activity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-
-            Glide.with(context)
+            final ItemForRecyclerView currentItem = itemArrayList.get(position);
+            Glide.with(getApplicationContext())
                     .asBitmap()
-                    .load(images.get(position))
+                    .load(currentItem.getImageView())
                     .into(holder.imageView);
-            holder.title.setText(titles.get(position));
-            holder.preise.setText(preices.get(position));
-            holder.objectId = objectIds.get(position);
-            holder.descreption = descreptions.get(position);
-            holder.latitude = latitudes.get(position);
-            holder.longitude = longitudes.get(position);
-
+            holder.title.setText(currentItem.getTitle());
+            holder.preise.setText(String.valueOf(currentItem.getPreis()));
+            holder.objectId = currentItem.getObjectId();
+            holder.descreption = currentItem.getDescreption();
+            holder.latitude = currentItem.getLatitude();
+            holder.longitude = currentItem.getLongitude();
             if (holder.imageView != null) {
                 holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), displayItem.class);
-                        intent.putExtra("objectId", objectIdes.get(position));
-                        intent.putExtra("title", titles.get(position));
-                        intent.putExtra("price", preices.get(position));
-                        intent.putExtra("descreption", descreptions.get(position));
-                        intent.putExtra("latitude", latitudes.get(position));
-                        intent.putExtra("longitude", longitudes.get(position));
-
+                        intent.putExtra("objectId", currentItem.getObjectId());
+                        intent.putExtra("title", currentItem.getTitle());
+                        intent.putExtra("price", currentItem.getPreis());
+                        intent.putExtra("descreption", currentItem.getDescreption());
+                        intent.putExtra("latitude", currentItem.getLatitude());
+                        intent.putExtra("longitude", currentItem.getLongitude());
                         startActivity(intent);
                     }
                 });
             } else {
-                Toast.makeText(context, "NULL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public int getItemCount() {
-            return images.size();
+            return itemArrayList.size();
         }
+
+        // this method for search
+        @Override
+        public Filter getFilter() {
+            return filter;
+        }
+
+        private Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<ItemForRecyclerView> filterdList = new ArrayList<>();
+                // if search box empty we give all the data that we have without filtering
+                if (constraint == null || constraint.length() == 0) {
+                    filterdList.addAll(itemArrayListFull);
+                } else {
+                    String filertPattern = constraint.toString().toLowerCase().trim();
+                    for (ItemForRecyclerView item : itemArrayListFull) {
+                        if (item.getTitle().toLowerCase().contains(filertPattern)) {
+                            filterdList.add(item);
+                        }
+                    }
+                }
+                FilterResults results = new FilterResults();
+                results.values = filterdList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemArrayList.clear();
+                itemArrayList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             String objectId, descreption;
@@ -698,6 +713,7 @@ public class main_menu_Activity extends AppCompatActivity {
             TextView preise;
             CardView parentLayout;
             double latitude, longitude;
+
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -712,22 +728,15 @@ public class main_menu_Activity extends AppCompatActivity {
 
 
     private void inintObjectsInRecyclerView() {
-
         int c = 0;
         for (ParseObject object : objectList) {
             ArrayList<String> objectPhotos = new ArrayList<>();
             c++;
+            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
+
             final ParseFile photo1 = (ParseFile) object.get("photo1");
             imagesUrls.add(photo1.getUrl());
             objectPhotos.add(photo1.getUrl());
-            titles.add(object.getString("title"));
-            preises.add(object.getInt("price") + " " + object.getString("currency"));
-            descreptions.add(object.getString("descreption"));
-            objectIdes.add(object.getObjectId());
-            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
-            latitudes.add(itemLocation.getLatitude());
-            longitudes.add(itemLocation.getLongitude());
-
             final ParseFile photo2 = (ParseFile) object.get("photo2");
             if (photo2 != null) objectPhotos.add(photo2.getUrl());
             final ParseFile photo3 = (ParseFile) object.get("photo3");
@@ -736,20 +745,23 @@ public class main_menu_Activity extends AppCompatActivity {
             if (photo4 != null) objectPhotos.add(photo4.getUrl());
             final ParseFile photo5 = (ParseFile) object.get("photo5");
             if (photo5 != null) objectPhotos.add(photo5.getUrl());
+            itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
+                    object.getString("title"), object.getInt("price"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
-            objectsMap.put(object.getObjectId(), objectPhotos);
+            main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
         }
+
         Toast.makeText(getApplicationContext(), String.valueOf(c), Toast.LENGTH_LONG).show();
         inintRecyclerVIew();
 
     }
 
     private void inintRecyclerVIew() {
-        RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, imagesUrls, titles, preises, objectIdes, descreptions, latitudes, longitudes);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerViewSelling.setHasFixedSize(true);
+        myLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        myAdapter = new RecyclerViewAdapter(itemArrayList);
+        recyclerViewSelling.setLayoutManager(myLayoutManager);
+        recyclerViewSelling.setAdapter(myAdapter);
     }
 
     public static List<ParseObject> getObjects() {

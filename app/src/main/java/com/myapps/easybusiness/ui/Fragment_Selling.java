@@ -2,6 +2,7 @@ package com.myapps.easybusiness.ui;
 
 import com.bumptech.glide.Glide;
 import com.myapps.easybusiness.Item;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,12 +16,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.displayItem;
 import com.myapps.easybusiness.main_menu_Activity;
@@ -40,16 +43,8 @@ import java.util.List;
 public class Fragment_Selling extends Fragment implements View.OnClickListener {
     // vars
     private ArrayList<String> imagesUrls = new ArrayList<>();
-    private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<String> preises = new ArrayList<>();
-    private ArrayList<String> objectIdes = new ArrayList<>();
-    private ArrayList<String> descreptions = new ArrayList<>();
-    private ArrayList<Double> latitudes = new ArrayList<>();
-    private ArrayList<Double> longitudes = new ArrayList<>();
     RecyclerView recyclerViewSelling;
     List<ParseObject> parseObjects = main_menu_Activity.objectList;
-
-    // new Way
     ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager myLayoutManager;
@@ -65,10 +60,6 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selling_layout, container, false);
         recyclerViewSelling = view.findViewById(R.id.layoutSelling);
-        // new Way
-
-
-        //  fillLinearLayoutSelling();
         inintObjectsInRecyclerView();
         return view;
 
@@ -219,12 +210,12 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
 
      */
 
-    public  class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
-        ArrayList<ItemForRecyclerView> itemArrayList ;
-        public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList){
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolderSelling> {
+        ArrayList<ItemForRecyclerView> itemArrayList;
+
+        public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList) {
             this.itemArrayList = itemArrayList;
         }
-
 
 
         @NonNull
@@ -259,7 +250,6 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                         intent.putExtra("descreption", currentItem.getDescreption());
                         intent.putExtra("latitude", currentItem.getLatitude());
                         intent.putExtra("longitude", currentItem.getLongitude());
-
                         startActivity(intent);
                     }
                 });
@@ -273,11 +263,11 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         public int getItemCount() {
             // return parseObjects.size();
             // new Way
-            return  itemArrayList.size();
+            return itemArrayList.size();
 
         }
 
-        public  class ViewHolderSelling extends RecyclerView.ViewHolder {
+        public class ViewHolderSelling extends RecyclerView.ViewHolder {
             String objectId, descreption;
             ImageView imageView;
             TextView title;
@@ -305,7 +295,7 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             ParseQuery<ParseObject> query = new ParseQuery<>("Item");
-                                            if (getAdapterPosition() <= itemArrayList.size() && getAdapterPosition()!=RecyclerView.NO_POSITION) {
+                                            if (getAdapterPosition() <= itemArrayList.size() && getAdapterPosition() != RecyclerView.NO_POSITION) {
                                                 query.whereEqualTo("objectId", itemArrayList.get(getAdapterPosition()).getObjectId());
                                                 query.findInBackground(new FindCallback<ParseObject>() {
                                                     @Override
@@ -346,24 +336,14 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
 
     private void inintObjectsInRecyclerView() {
         int c = 0;
-        for (ParseObject object :parseObjects) {
+        for (ParseObject object : parseObjects) {
             ArrayList<String> objectPhotos = new ArrayList<>();
             c++;
+            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
+
             final ParseFile photo1 = (ParseFile) object.get("photo1");
             imagesUrls.add(photo1.getUrl());
             objectPhotos.add(photo1.getUrl());
-            titles.add(object.getString("title"));
-            preises.add(object.getInt("price") + " " + object.getString("currency"));
-            descreptions.add(object.getString("descreption"));
-            objectIdes.add(object.getObjectId());
-            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
-            latitudes.add(itemLocation.getLatitude());
-            longitudes.add(itemLocation.getLongitude());
-
-            // new Way
-            itemArrayList.add(new ItemForRecyclerView(object.getObjectId(),object.getString("descreption"),photo1.getUrl(),
-                    object.getString("title"),object.getInt("price"),itemLocation.getLatitude(),itemLocation.getLongitude()));
-
             final ParseFile photo2 = (ParseFile) object.get("photo2");
             if (photo2 != null) objectPhotos.add(photo2.getUrl());
             final ParseFile photo3 = (ParseFile) object.get("photo3");
@@ -372,6 +352,8 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
             if (photo4 != null) objectPhotos.add(photo4.getUrl());
             final ParseFile photo5 = (ParseFile) object.get("photo5");
             if (photo5 != null) objectPhotos.add(photo5.getUrl());
+            itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
+                    object.getString("title"), object.getInt("price"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
             main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
         }
