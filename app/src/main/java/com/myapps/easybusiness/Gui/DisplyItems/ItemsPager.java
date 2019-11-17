@@ -9,10 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.myapps.easybusiness.R;
+import com.ortiz.touchview.TouchImageView;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 
@@ -36,25 +42,16 @@ public class ItemsPager extends PagerAdapter {
     */
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(final ViewGroup container, int position) {
          final View view = LayoutInflater.from(context).inflate(R.layout.display_pager_item, null);
-         ImageView imageView = view.findViewById(R.id.imageItem);
-         Uri uri = Uri.parse(getImageAt(position));
-         imageView.setImageURI(uri);
-        // Picasso.with(context).load(getImageAt(position)).into(imageView);
-         //Glide.with(context).load(getImageAt(position)).into(imageView);
+         TouchImageView imageView = view.findViewById(R.id.imageItem);
+         //Uri uri = Uri.parse(getImageAt(position));
+        // imageView.setImageURI(uri);
+         Picasso.with(context).load(getImageAt(position)).into(imageView);
+        //Glide.with(context).load(getImageAt(position)).into(imageView);
         // imageView.setImageBitmap(getImageAt(position));
         // imageView.setImageDrawable(context.getResources().getDrawable(getImageAt(position)));
-        container.addView(view);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(context.getApplicationContext(),"hi",Toast.LENGTH_SHORT).show();
-                DisplyItemsActivity.makeViewPagerBig();
-            }
-        });
+         container.addView(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         return view;
     }
 

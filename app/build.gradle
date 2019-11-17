@@ -65,6 +65,6 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
     // zooming fotos
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-
+    //implementation 'com.github.hannesa2:TouchImageView:2.3.0'
+    implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0' // Android X
 }

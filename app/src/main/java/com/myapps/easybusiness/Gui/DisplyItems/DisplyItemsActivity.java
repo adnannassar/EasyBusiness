@@ -5,7 +5,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +32,15 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class DisplyItemsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private ItemsPager myPager;
     private MapView mMapView;
     private static final String MAPVIEW_BUNDLE_KEY = "AIzaSyBd3YFdw4hdmZ2JuikJlJFphPSmDpbdT34";
     private TextView txtTitle, txtPreis, txtDescreption, textUsername;
     private CircleImageView imageViewUserPhotoInDisplayItem;
-    private static ScrollView scrollView;
-    private static Button btnPrivateMessage;
+    public static ScrollView scrollView;
+    public static Button btnPrivateMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +87,7 @@ public class DisplyItemsActivity extends AppCompatActivity implements OnMapReady
 
 
     public static void makeViewPagerBig() {
-        scrollView.setVisibility(View.GONE);
-        btnPrivateMessage.setVisibility(View.GONE);
+
     }
 
     public static void makeViewPagerSmall() {

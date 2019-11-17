@@ -6,21 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/imageItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        app:fadeDuration="1000"
-        fresco:actualImageScaleType="focusCrop" />
-
-
     <!--
-    <ImageView
+   <com.facebook.drawee.view.SimpleDraweeView
+          android:id="@+id/imageItem"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerInside"
+          app:fadeDuration="1000"
+          fresco:actualImageScaleType="focusCrop" />
+      -->
+
+
+    <com.ortiz.touchview.TouchImageView
         android:id="@+id/imageItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"></ImageView>
-      -->
+        android:scaleType="centerCrop"
+        app:fadeDuration="1000" />
+
 </LinearLayout>
