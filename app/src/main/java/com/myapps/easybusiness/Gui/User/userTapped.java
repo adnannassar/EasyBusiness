@@ -9,13 +9,18 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,29 +35,34 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class userTapped extends AppCompatActivity {
+public class userTapped extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     CircleImageView profilePhoto;
-    TextView txtUserName ;
+    TextView txtUserName;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_tapped);
+        mSwipeRefreshLayout = findViewById(R.id.swipeLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        //  FloatingActionButton fab = findViewById(R.id.fab);
         profilePhoto = findViewById(R.id.imageViewUserPhoto);
         txtUserName = findViewById(R.id.txtuserNameInUser);
         txtUserName.setText(ParseUser.getCurrentUser().getUsername());
-        refreshPage();
+        refreshPageAfterUpdateProfilePhoto();
+        /*
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +70,8 @@ public class userTapped extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+         */
 
     }
 
@@ -151,7 +163,7 @@ public class userTapped extends AppCompatActivity {
     }
 
     //
-    public  void refreshPage() {
+    public void refreshPageAfterUpdateProfilePhoto() {
 
         final ParseFile profilePhotoFile = (ParseFile) ParseUser.getCurrentUser().get("profilePhoto");
         if (profilePhotoFile != null) {
@@ -166,6 +178,23 @@ public class userTapped extends AppCompatActivity {
             });
         }
 
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                refreshPage();
+            }
+        }, 1000);
+    }
+
+    public void refreshPage() {
+        finish();
+        startActivity(this.getIntent());
     }
 }
 

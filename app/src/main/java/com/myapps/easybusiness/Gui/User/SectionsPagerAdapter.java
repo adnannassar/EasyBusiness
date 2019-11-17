@@ -14,7 +14,7 @@ import com.myapps.easybusiness.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentStatePagerAdapter{
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
@@ -22,16 +22,24 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter{
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+
         mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-      Fragment fragment = null;
+        Fragment fragment = null;
         switch (position) {
-            case 0 : fragment = new Fragment_Messages(); break;
-            case 1 : fragment = new Fragment_Selling(); break;
-            case 2 : fragment = new Fragment_Profile(); break;
+
+            case 0:
+                fragment = new Fragment_Selling();
+                break;
+            case 1:
+                fragment = new Fragment_Messages();
+                break;
+            case 2:
+                fragment = new Fragment_Profile();
+                break;
         }
         return fragment;
     }

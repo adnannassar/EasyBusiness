@@ -26,8 +26,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="search_hint">Find the items that you like</string>
     <string name="title_activity_user_tepped">userTeppedActivity</string>
-    <string name="tab_text_1">Messages</string>
-    <string name="tab_text_2">Selling</string>
+    <string name="tab_text_1">Selling</string>
+    <string name="tab_text_2">Messages</string>
     <string name="tab_text_3">Profile</string>
     <string name="title_activity_user_tapped">userTapped</string>
 

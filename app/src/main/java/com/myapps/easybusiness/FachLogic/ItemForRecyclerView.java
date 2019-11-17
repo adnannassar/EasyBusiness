@@ -7,11 +7,11 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 
 public class ItemForRecyclerView {
-    String objectId, descreption , imageView , title;
-    int preis;
+    String objectId, descreption , imageView , title ;
+    String preis;
     double latitude, longitude;
 
-    public ItemForRecyclerView(String objectId, String descreption, String imageView, String title, int preis, double latitude, double longitude) {
+    public ItemForRecyclerView(String objectId, String descreption, String imageView, String title, String preis, double latitude, double longitude) {
         this.objectId = objectId;
         this.descreption = descreption;
         this.imageView = imageView;
@@ -37,7 +37,7 @@ public class ItemForRecyclerView {
         return title;
     }
 
-    public int getPreis() {
+    public String getPreis() {
         return preis;
     }
 

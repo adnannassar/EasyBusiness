@@ -1,129 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000C0B0B"
+    android:orientation="vertical"
     tools:context=".Gui.User.userTapped">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="210dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="176dp"
-            android:background="@color/mythemecolor"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/btn_user_back"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="48dp"
-                android:layout_height="34dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="-2dp"
-                android:layout_marginLeft="-2dp"
-                android:layout_marginTop="2dp"
-                android:onClick="go_back_to_mainMenu"
-                app:srcCompat="@drawable/left_arrow_green_small" />
-
-            <TextView
-                android:id="@+id/txtuserNameInUser"
-                android:layout_width="75dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="148dp"
-                android:layout_marginLeft="148dp"
-                android:layout_marginTop="55dp"
-                android:text="Adnan N."
-                android:textColor="#227671"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="75dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="148dp"
-                android:layout_marginLeft="148dp"
-                android:layout_marginTop="79dp"
-                android:text="4 Sterne"
-                android:textColor="#227671"
-                android:textSize="18sp" />
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewUserPhoto"
-                android:layout_width="110dp"
-                android:layout_height="124dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="21dp"
-                android:layout_marginBottom="0dp"
-                android:onClick="changeUserProfilePhoto"
-                android:src="@mipmap/ic_launcher" />
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="29dp"
-                android:layout_height="33dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                app:srcCompat="@drawable/settings_small" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="106dp"
-                android:layout_marginEnd="181dp"
-                android:layout_marginRight="181dp"
-                android:layout_marginBottom="22dp"
-                android:onClick="logout"
-                android:text="Logout" />
-
-        </RelativeLayout>
-
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mythemecolor"
-            android:scrollbarSize="4dp"
-            app:tabTextColor="@color/white" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:background="@color/white"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="176dp"
+                android:background="@color/mythemecolor"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_user_back"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="-2dp"
+                    android:layout_marginLeft="-2dp"
+                    android:layout_marginTop="2dp"
+                    android:onClick="go_back_to_mainMenu"
+                    app:srcCompat="@drawable/left_arrow_green_small" />
+
+                <TextView
+                    android:id="@+id/txtuserNameInUser"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="148dp"
+                    android:layout_marginLeft="148dp"
+                    android:layout_marginTop="55dp"
+                    android:text="Adnan N."
+                    android:textColor="#227671"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="148dp"
+                    android:layout_marginLeft="148dp"
+                    android:layout_marginTop="79dp"
+                    android:text="4 Sterne"
+                    android:textColor="#227671"
+                    android:textSize="18sp" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewUserPhoto"
+                    android:layout_width="110dp"
+                    android:layout_height="124dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginBottom="0dp"
+                    android:onClick="changeUserProfilePhoto"
+                    android:src="@mipmap/ic_launcher" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="29dp"
+                    android:layout_height="33dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginRight="6dp"
+                    app:srcCompat="@drawable/settings_small" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="106dp"
+                    android:layout_marginEnd="181dp"
+                    android:layout_marginRight="181dp"
+                    android:layout_marginBottom="22dp"
+                    android:onClick="logout"
+                    android:text="Logout" />
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mythemecolor"
+                android:scrollbarSize="4dp"
+                app:tabTextColor="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--  <com.google.android.material.floatingactionbutton.FloatingActionButton
+          android:id="@+id/fab"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="@dimen/fab_margin"
+          app:srcCompat="@android:drawable/ic_dialog_email" />
+          -->
+</LinearLayout>

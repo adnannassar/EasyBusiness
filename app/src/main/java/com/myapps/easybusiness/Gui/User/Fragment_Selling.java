@@ -52,9 +52,7 @@ public class Fragment_Selling extends Fragment {
     RecyclerView.LayoutManager myLayoutManager;
 
 
-    public Fragment_Selling() {
-
-    }
+    public Fragment_Selling() { }
 
 
     @Nullable
@@ -355,7 +353,7 @@ public class Fragment_Selling extends Fragment {
             final ParseFile photo5 = (ParseFile) object.get("photo5");
             if (photo5 != null) objectPhotos.add(photo5.getUrl());
             itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
-                    object.getString("title"), object.getInt("price"), itemLocation.getLatitude(), itemLocation.getLongitude()));
+                    object.getString("title"),object.getInt("price")+" "+object.getString("currency"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
             Main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
         }
@@ -394,8 +392,6 @@ public class Fragment_Selling extends Fragment {
         recyclerView.scheduleLayoutAnimation();
 
     }
-
-
 
     //Custom Adapter for Items List
     private class ItemsAdapter extends ArrayAdapter<Item> {

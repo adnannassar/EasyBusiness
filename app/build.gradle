@@ -67,4 +67,7 @@ dependencies {
     // zooming fotos
     //implementation 'com.github.hannesa2:TouchImageView:2.3.0'
     implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0' // Android X
+
+    // swiperefreshlayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
 }
