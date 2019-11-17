@@ -3,6 +3,7 @@ package com.myapps.easybusiness.Gui.DisplyItems;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.myapps.easybusiness.Gui.Chat.Chat_Activity;
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
 import com.parse.ParseFile;
@@ -181,6 +183,11 @@ public class DisplyItemsActivity extends AppCompatActivity implements OnMapReady
     }
 
     public void message(View view) {
-        Toast.makeText(this, "This Function will be implemented soon :) ", Toast.LENGTH_SHORT).show();
+        goToChatActivity();
+    }
+
+    public void goToChatActivity() {
+        Intent intent = new Intent(this, Chat_Activity.class);
+        startActivity(intent);
     }
 }

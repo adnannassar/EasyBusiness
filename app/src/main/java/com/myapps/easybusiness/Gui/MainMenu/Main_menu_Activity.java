@@ -311,7 +311,7 @@ public class Main_menu_Activity extends AppCompatActivity  {
 
     private void inintRecyclerVIew() {
         recyclerView.setHasFixedSize(true);
-        myLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        myLayoutManager = new GridLayoutManager(this, 2);
         myAdapter = new RecyclerViewAdapter(itemArrayList);
         recyclerView.setLayoutManager(myLayoutManager);
         recyclerView.setAdapter(myAdapter);
