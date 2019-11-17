@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,7 +42,7 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_Selling extends Fragment implements View.OnClickListener {
+public class Fragment_Selling extends Fragment {
     // vars
     private ArrayList<String> imagesUrls = new ArrayList<>();
     RecyclerView recyclerViewSelling;
@@ -369,13 +371,31 @@ public class Fragment_Selling extends Fragment implements View.OnClickListener {
         myAdapter = new RecyclerViewAdapter(itemArrayList);
         recyclerViewSelling.setLayoutManager(myLayoutManager);
         recyclerViewSelling.setAdapter(myAdapter);
+        runAnimation(recyclerViewSelling,0);
+    }
+    private void runAnimation(RecyclerView recyclerView, int type) {
+        Context context = recyclerView.getContext();
+        LayoutAnimationController controller = null;
+
+        if (type == 0) {       // fall down animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down);
+        } else if (type == 1) {// slide from bottom animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_bottom);
+        } else if (type == 2) {// slide from right animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_right);
+        } else if (type == 3) {// slide from left animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_left);
+
+        }
+
+        // set anim
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
     }
 
 
-    @Override
-    public void onClick(View v) {
-
-    }
 
     //Custom Adapter for Items List
     private class ItemsAdapter extends ArrayAdapter<Item> {

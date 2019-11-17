@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.Filter;
@@ -50,7 +53,7 @@ public class Main_menu_Activity extends AppCompatActivity {
     public static List<ParseObject> objectList = getObjects();
     public static LinkedHashMap<String, ArrayList<String>> objectsMap;
     private ArrayList<String> imagesUrls = new ArrayList<>();
-    RecyclerView recyclerViewSelling;
+    RecyclerView recyclerView;
     ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
     RecyclerViewAdapter myAdapter;
     RecyclerView.LayoutManager myLayoutManager;
@@ -63,7 +66,7 @@ public class Main_menu_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-        recyclerViewSelling = findViewById(R.id.main_recycler_view);
+        recyclerView = findViewById(R.id.main_recycler_view);
         searchView = findViewById(R.id.searchview);
         btnDiscover = findViewById(R.id.btnDiscover);
         btnSell = findViewById(R.id.btnSell);
@@ -750,16 +753,38 @@ public class Main_menu_Activity extends AppCompatActivity {
     }
 
     private void inintRecyclerVIew() {
-        recyclerViewSelling.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         myLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         myAdapter = new RecyclerViewAdapter(itemArrayList);
-        recyclerViewSelling.setLayoutManager(myLayoutManager);
-        recyclerViewSelling.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(myLayoutManager);
+        recyclerView.setAdapter(myAdapter);
+        runAnimation(recyclerView,2);
+    }
+    private void runAnimation(RecyclerView recyclerView, int type) {
+        Context context = recyclerView.getContext();
+        LayoutAnimationController controller = null;
+
+        if (type == 0) {       // fall down animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down);
+        } else if (type == 1) {// slide from bottom animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_bottom);
+        } else if (type == 2) {// slide from right animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_right);
+        } else if (type == 3) {// slide from left animation
+            controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_from_left);
+
+        }
+
+        // set anim
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
     }
 
     public static List<ParseObject> getObjects() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
-        query.orderByAscending("createdAt");
+        query.orderByDescending("createdAt");
 
         try {
             return query.find();
