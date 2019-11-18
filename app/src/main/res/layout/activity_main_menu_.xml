@@ -21,13 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"
-            android:orientation="horizontal">
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <SearchView
                 android:id="@+id/searchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/stroke"
                 android:closeIcon="@drawable/rsz_x"
@@ -36,12 +39,13 @@
 
             </SearchView>
 
-            <ImageView
-                android:id="@+id/btnFilter"
-                android:layout_width="44dp"
+            <ImageButton
+                android:id="@+id/imageButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="29dp"
                 android:layout_height="33dp"
-                android:contentDescription="@string/todo"
-                app:srcCompat="@drawable/filterbiiger" />
+                app:srcCompat="@drawable/filter_35px"
+                android:onClick="sayHi"/>
 
         </LinearLayout>
 
@@ -236,14 +240,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/rounded_button_black_when_prees"
                 android:drawableTop="@drawable/discovericon3"
                 android:fadeScrollbars="false"
+                android:onClick="discover"
                 android:text="@string/discover"
                 android:textColor="#227671"
-                android:textSize="12sp"
-                android:background="@drawable/rounded_button_black_when_prees"
-                android:onClick="discover"
-                />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btnSell"
@@ -252,12 +255,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/rounded_button_black_when_prees"
                 android:drawableTop="@drawable/cameraicon2"
                 android:onClick="startSellingActivity"
                 android:text="@string/sell"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@drawable/rounded_button_black_when_prees"/>
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btnUser"
@@ -266,12 +269,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/rounded_button_black_when_prees"
                 android:drawableTop="@drawable/usericonsmall"
                 android:onClick="goToUserActivity"
                 android:text="@string/user"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@drawable/rounded_button_black_when_prees"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
 

@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,18 +38,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Chat_Activity extends AppCompatActivity {
-    static Button btnSendMessage ;
+    static Button btnSendMessage;
     public static List<ParseObject> objectList = getObjects();
     RecyclerView recyclerView;
     ArrayList<MessageItem> messageItemArrayList = new ArrayList<>();
     MessageRecyclerViewAdapter myAdapter;
     RecyclerView.LayoutManager myLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
         recyclerView = findViewById(R.id.recyclerViewMessages);
+
         inintObjectsInRecyclerView();
+
     }
 
 
@@ -71,7 +76,8 @@ public class Chat_Activity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolderMessage holder, int position) {
             final MessageItem currentItem = messageItemArrayList.get(position);
-            holder.txtMessage.setText(currentItem.getTextMessage());
+            holder.txtMessageSender.setText(currentItem.getTxtMessageSender());
+            holder.txtMessageReceiver.setText(currentItem.getTxtMessageReceiver());
             holder.sender = currentItem.getSender();
             holder.receiver = currentItem.getReceiver();
         }
@@ -82,35 +88,41 @@ public class Chat_Activity extends AppCompatActivity {
         }
 
         class ViewHolderMessage extends RecyclerView.ViewHolder {
-            TextView txtMessage;
+            TextView txtMessageSender, txtMessageReceiver;
             String sender, receiver;
 
             public ViewHolderMessage(@NonNull View itemView) {
                 super(itemView);
-                txtMessage = itemView.findViewById(R.id.txtMessage);
+                txtMessageSender = itemView.findViewById(R.id.txtMessageSender);
+                txtMessageReceiver =itemView.findViewById(R.id.txtMessageReceiver);
             }
         }
     }
 
     class MessageItem {
-        private String textMessage, sender, receiver;
+        private String txtMessageSender, txtMessageReceiver, sender, receiver;
 
-        public MessageItem(String textMessage, String sender, String receiver) {
-            this.textMessage = textMessage;
+        public MessageItem(String txtMessageSender, String txtMessageReceiver, String sender, String receiver) {
+            this.txtMessageSender = txtMessageSender;
+            this.txtMessageReceiver = txtMessageReceiver;
             this.sender = sender;
             this.receiver = receiver;
         }
 
-        public String getReceiver() {
-            return receiver;
+        public String getTxtMessageSender() {
+            return txtMessageSender;
+        }
+
+        public String getTxtMessageReceiver() {
+            return txtMessageReceiver;
         }
 
         public String getSender() {
             return sender;
         }
 
-        public String getTextMessage() {
-            return textMessage;
+        public String getReceiver() {
+            return receiver;
         }
     }
 
@@ -119,7 +131,7 @@ public class Chat_Activity extends AppCompatActivity {
         int c = 0;
         for (ParseObject object : objectList) {
             c++;
-            messageItemArrayList.add(new MessageItem(object.getString("title"),object.getString("title"),object.getString("title")));
+            messageItemArrayList.add(new MessageItem(object.getString("title"), object.getString("descreption"), "TEST", "TEST"));
         }
 
         Toast.makeText(getApplicationContext(), String.valueOf(c), Toast.LENGTH_LONG).show();
@@ -135,6 +147,7 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
         runAnimation(recyclerView, 3);
     }
+
     public static List<ParseObject> getObjects() {
         ParseQuery<ParseObject> query = new ParseQuery<>("Item");
         query.orderByDescending("createdAt");
@@ -146,6 +159,7 @@ public class Chat_Activity extends AppCompatActivity {
         }
         return null;
     }
+
     private void runAnimation(RecyclerView recyclerView, int type) {
         Context context = recyclerView.getContext();
         LayoutAnimationController controller = null;

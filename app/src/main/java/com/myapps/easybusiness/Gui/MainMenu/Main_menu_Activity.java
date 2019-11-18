@@ -1,13 +1,13 @@
 package com.myapps.easybusiness.Gui.MainMenu;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +25,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +39,7 @@ import com.myapps.easybusiness.Gui.SellingItems.sellingItem;
 import com.myapps.easybusiness.Gui.DisplyItems.DisplyItemsActivity;
 import com.myapps.easybusiness.Gui.User.userTapped;
 import com.myapps.easybusiness.FachLogic.ItemForRecyclerView;
+import com.myapps.easybusiness.Utilites.LoadMore;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -47,7 +51,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class Main_menu_Activity extends AppCompatActivity  {
+import jxl.biff.drawing.TextObjectRecord;
+
+public class Main_menu_Activity extends AppCompatActivity {
 
 
     //vars
@@ -59,7 +65,7 @@ public class Main_menu_Activity extends AppCompatActivity  {
     private ArrayList<String> imagesUrls = new ArrayList<>();
     RecyclerView recyclerView;
     ArrayList<ItemForRecyclerView> itemArrayList = new ArrayList<>();
-    RecyclerViewAdapter myAdapter;
+    public RecyclerViewAdapter myAdapter;
     RecyclerView.LayoutManager myLayoutManager;
 
 
@@ -81,8 +87,8 @@ public class Main_menu_Activity extends AppCompatActivity  {
         objectsMap = new LinkedHashMap<>();
 
         initMainMenu();
-        inintObjectsInRecyclerView();
-
+        inintObjectsInRecyclerView(0, 10);
+        inintRecyclerVIew();
 
         //Search Functions
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -168,56 +174,112 @@ public class Main_menu_Activity extends AppCompatActivity  {
 
     }
 
+    public void sayHi(View view) {
+        Toast.makeText(this,"Hi",Toast.LENGTH_SHORT).show();
+    }
 
-    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
+
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
+        private final int VIEW_TYPE_ITEM = 0, VIEW_TYPE_LOADING = 1;
+        LoadMore loadMore;
+        boolean isLoading;
+        Activity activity;
+        int visibleThreshold = 5;
+        int lastVisibleItem, totalItemCount;
+
 
         ArrayList<ItemForRecyclerView> itemArrayList;
         ArrayList<ItemForRecyclerView> itemArrayListFull; // we need this list for search
 
-        public RecyclerViewAdapter(ArrayList<ItemForRecyclerView> itemArrayList) {
+        public RecyclerViewAdapter(RecyclerView recyclerView, Activity activity, ArrayList<ItemForRecyclerView> itemArrayList) {
+            this.activity = activity;
             this.itemArrayList = itemArrayList;
             itemArrayListFull = new ArrayList<>(itemArrayList); // this is the copy of list, if we write itemArrayListFull  = itemArrayList then we have one pointer to both lists
+            final GridLayoutManager  gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    totalItemCount = gridLayoutManager.getItemCount();
+                    lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
+                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                        if (loadMore != null) {
+                            loadMore.onLoadMore();
+                            isLoading = true;
+                        }
+                    }
+                }
+            });
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            return itemArrayList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        }
+
+        public void setLoadMore(LoadMore loadMore) {
+            this.loadMore = loadMore;
+        }
+
+        public void setLoaded() {
+            isLoading = false;
+        }
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            if (viewType == VIEW_TYPE_ITEM) {
+
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
+                ItemViewHolder itemViewHolder = new ItemViewHolder(view);
+                return itemViewHolder;
+            } else if (viewType == VIEW_TYPE_LOADING) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+                LoadingViewHolder loadingViewHolder = new LoadingViewHolder(view);
+                return loadingViewHolder;
+            }
+
+            return null;
         }
 
+
         @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-            final ItemForRecyclerView currentItem = itemArrayList.get(position);
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(currentItem.getImageView())
-                    .into(holder.imageView);
-            holder.title.setText(currentItem.getTitle());
-            holder.preise.setText(String.valueOf(currentItem.getPreis()));
-            holder.objectId = currentItem.getObjectId();
-            holder.descreption = currentItem.getDescreption();
-            holder.latitude = currentItem.getLatitude();
-            holder.longitude = currentItem.getLongitude();
-            if (holder.imageView != null) {
-                holder.imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
-                        intent.putExtra("objectId", currentItem.getObjectId());
-                        intent.putExtra("title", currentItem.getTitle());
-                        intent.putExtra("price", currentItem.getPreis());
-                        intent.putExtra("descreption", currentItem.getDescreption());
-                        intent.putExtra("latitude", currentItem.getLatitude());
-                        intent.putExtra("longitude", currentItem.getLongitude());
-                        startActivity(intent);
-                    }
-                });
-            } else {
-                Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
+        public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+            if (holder instanceof ItemViewHolder) {
+                ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+                final ItemForRecyclerView currentItem = itemArrayList.get(position);
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(currentItem.getImageView())
+                        .into(itemViewHolder.imageView);
+                itemViewHolder.title.setText(currentItem.getTitle());
+                itemViewHolder.preise.setText(String.valueOf(currentItem.getPreis()));
+                itemViewHolder.objectId = currentItem.getObjectId();
+                itemViewHolder.descreption = currentItem.getDescreption();
+                itemViewHolder.latitude = currentItem.getLatitude();
+                itemViewHolder.longitude = currentItem.getLongitude();
+                if (itemViewHolder.imageView != null) {
+                    itemViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), DisplyItemsActivity.class);
+                            intent.putExtra("objectId", currentItem.getObjectId());
+                            intent.putExtra("title", currentItem.getTitle());
+                            intent.putExtra("price", currentItem.getPreis());
+                            intent.putExtra("descreption", currentItem.getDescreption());
+                            intent.putExtra("latitude", currentItem.getLatitude());
+                            intent.putExtra("longitude", currentItem.getLongitude());
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
+                }
+            } else if (holder instanceof LoadingViewHolder) {
+                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+                loadingViewHolder.progressBar.setIndeterminate(true);
             }
+
         }
 
         @Override
@@ -259,7 +321,7 @@ public class Main_menu_Activity extends AppCompatActivity  {
             }
         };
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ItemViewHolder extends RecyclerView.ViewHolder {
             String objectId, descreption;
             ImageView imageView;
             TextView title;
@@ -268,7 +330,7 @@ public class Main_menu_Activity extends AppCompatActivity  {
             double latitude, longitude;
 
 
-            public ViewHolder(@NonNull View itemView) {
+            public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
                 imageView = itemView.findViewById(R.id.imageViewItemInRecyclerView);
                 title = itemView.findViewById(R.id.txttitleInRecyclerView);
@@ -277,44 +339,92 @@ public class Main_menu_Activity extends AppCompatActivity  {
 
             }
         }
+
+        public class LoadingViewHolder extends RecyclerView.ViewHolder {
+            ProgressBar progressBar;
+
+            public LoadingViewHolder(@NonNull View itemView) {
+                super(itemView);
+                progressBar = itemView.findViewById(R.id.progress_Bar);
+            }
+        }
     }
 
 
-    private void inintObjectsInRecyclerView() {
+    private void inintObjectsInRecyclerView(int start, int end) {
         int c = 0;
-        for (ParseObject object : objectList) {
+        for (int i = start; i < end; i++) {
             ArrayList<String> objectPhotos = new ArrayList<>();
             c++;
-            ParseGeoPoint itemLocation = object.getParseGeoPoint("itemLocation");
+            ParseGeoPoint itemLocation = objectList.get(i).getParseGeoPoint("itemLocation");
 
-            final ParseFile photo1 = (ParseFile) object.get("photo1");
+            final ParseFile photo1 = (ParseFile) objectList.get(i).get("photo1");
             imagesUrls.add(photo1.getUrl());
             objectPhotos.add(photo1.getUrl());
-            final ParseFile photo2 = (ParseFile) object.get("photo2");
+            final ParseFile photo2 = (ParseFile) objectList.get(i).get("photo2");
             if (photo2 != null) objectPhotos.add(photo2.getUrl());
-            final ParseFile photo3 = (ParseFile) object.get("photo3");
+            final ParseFile photo3 = (ParseFile) objectList.get(i).get("photo3");
             if (photo3 != null) objectPhotos.add(photo3.getUrl());
-            final ParseFile photo4 = (ParseFile) object.get("photo4");
+            final ParseFile photo4 = (ParseFile) objectList.get(i).get("photo4");
             if (photo4 != null) objectPhotos.add(photo4.getUrl());
-            final ParseFile photo5 = (ParseFile) object.get("photo5");
+            final ParseFile photo5 = (ParseFile) objectList.get(i).get("photo5");
             if (photo5 != null) objectPhotos.add(photo5.getUrl());
-            itemArrayList.add(new ItemForRecyclerView(object.getObjectId(), object.getString("descreption"), photo1.getUrl(),
-                    object.getString("title"),object.getInt("price")+" "+object.getString("currency"), itemLocation.getLatitude(), itemLocation.getLongitude()));
+            itemArrayList.add(new ItemForRecyclerView(objectList.get(i).getObjectId(), objectList.get(i).getString("descreption"), photo1.getUrl(),
+                    objectList.get(i).getString("title"), objectList.get(i).getInt("price") + " " + objectList.get(i).getString("currency"), itemLocation.getLatitude(), itemLocation.getLongitude()));
 
-            Main_menu_Activity.objectsMap.put(object.getObjectId(), objectPhotos);
+            Main_menu_Activity.objectsMap.put(objectList.get(i).getObjectId(), objectPhotos);
+        }
+        if(end == start){
+            Toast.makeText(getApplicationContext(), "Load data complete ! No data more", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(getApplicationContext(), c + " elements loaded !", Toast.LENGTH_SHORT).show();
+
         }
 
-        Toast.makeText(getApplicationContext(), String.valueOf(c), Toast.LENGTH_LONG).show();
-        inintRecyclerVIew();
 
     }
 
     private void inintRecyclerVIew() {
         recyclerView.setHasFixedSize(true);
-        myLayoutManager = new GridLayoutManager(this, 2);
-        myAdapter = new RecyclerViewAdapter(itemArrayList);
+        myLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(myLayoutManager);
+        myAdapter = new RecyclerViewAdapter(recyclerView, this, itemArrayList);
         recyclerView.setAdapter(myAdapter);
+        // set Load More Event
+        myAdapter.setLoadMore(new LoadMore() {
+            @Override
+            public void onLoadMore() {
+                if (itemArrayList.size() <= objectList.size()) {
+                    itemArrayList.add(null);
+                    myAdapter.notifyItemInserted(itemArrayList.size() - 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            itemArrayList.remove(itemArrayList.size() - 1);
+                            myAdapter.notifyItemRemoved(itemArrayList.size());
+
+                            // load more data
+                            int index = itemArrayList.size();
+                            int end ;
+                            if (objectList.size() - index >= 10) {
+                                end = index + 10;
+                            } else {
+                                end =index + (objectList.size() - index);
+                            }
+
+                            inintObjectsInRecyclerView(index, end);
+                            myAdapter.notifyDataSetChanged();
+                            //runAnimation(recyclerView, 1);
+                            myAdapter.setLoaded();
+                        }
+
+                    }, 2000);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Load data complete !", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         runAnimation(recyclerView, 2);
     }
 

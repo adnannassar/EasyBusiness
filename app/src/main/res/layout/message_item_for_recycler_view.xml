@@ -9,16 +9,29 @@
     android:id="@+id/messageParentLayout">
 
     <TextView
-        android:id="@+id/txtMessage"
+        android:id="@+id/txtMessageSender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/red"
         android:textSize="16sp"
         android:text="DEMO MESSAGE"
         android:gravity="center"
         android:layout_gravity="start"
         android:maxWidth="250dp"
+        android:padding="5dp"
         android:background="#000">
     </TextView>
+     <TextView
+        android:id="@+id/txtMessageReceiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:textSize="16sp"
+        android:text="DEMO MESSAGE"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:maxWidth="250dp"
+         android:padding="5dp"
+         android:background="#000"/>
 
 </LinearLayout>

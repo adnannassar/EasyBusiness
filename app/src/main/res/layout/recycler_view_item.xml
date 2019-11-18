@@ -14,7 +14,8 @@
         app:cardCornerRadius="15dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
-        android:id="@+id/parent_layout_In_RecyclerView">
+        android:id="@+id/parent_layout_In_RecyclerView"
+        android:elevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
