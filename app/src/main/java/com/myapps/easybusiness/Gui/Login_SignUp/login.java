@@ -3,7 +3,10 @@ package com.myapps.easybusiness.Gui.Login_SignUp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.myapps.easybusiness.Datenhaltung.StarterApplication;
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
@@ -26,8 +31,16 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
 
 public class login extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
     EditText userName, password;
@@ -73,6 +86,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Vi
 
         // if User_Activity logged in
         if(ParseUser.getCurrentUser() != null){
+         //  ParseUser.logOut();
             showMainmenu();
         }
 
@@ -91,6 +105,7 @@ public class login extends AppCompatActivity implements View.OnClickListener, Vi
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
+                            saveArrayList(readFromExcel(),"plzList");
                             showMainmenu();
                             Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_SHORT).show();
                         } else {
@@ -163,5 +178,45 @@ public class login extends AppCompatActivity implements View.OnClickListener, Vi
         users_list_intent = new Intent(getApplicationContext(), Main_menu_Activity.class);
         startActivity(users_list_intent);
     }
+    public ArrayList<String> readFromExcel() {
+
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            AssetManager assetManager = getAssets();
+            InputStream inputStream = assetManager.open("PlzListe.xls");
+            WorkbookSettings ws = new WorkbookSettings();
+            ws.setEncoding("Cp1252");
+            Workbook workbook = Workbook.getWorkbook(inputStream, ws);
+
+            Sheet sheet = workbook.getSheet(0);
+
+            int row = sheet.getRows();
+            int columns = sheet.getColumns();
+
+            for (int i = 0; i < row; i++) {
+                String line = "";
+                for (int j = 0; j < columns; j++) {
+                    Cell cell = sheet.getCell(j, i);
+                    line += cell.getContents() + " ";
+                }
+                result.add(line);
+            }
+            return result;
+        } catch (Exception ex) {
+            Toast.makeText(this, "ERROR , " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    public void saveArrayList(ArrayList<String> list, String key){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        editor.putString(key, json);
+        editor.apply();     // This line is IMPORTANT !!!
+    }
+
+
 
 }

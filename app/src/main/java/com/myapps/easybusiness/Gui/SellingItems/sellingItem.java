@@ -2,12 +2,14 @@ package com.myapps.easybusiness.Gui.SellingItems;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -22,6 +24,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -39,6 +42,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.myapps.easybusiness.FachLogic.CategoryItem;
 import com.myapps.easybusiness.R;
 import com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity;
@@ -54,6 +59,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -118,7 +124,7 @@ public class sellingItem extends AppCompatActivity {
         //ArrayLists initialization
         initCategoryList();
         curencyList = new ArrayList<>(Arrays.asList("EUR", "USD", "GBP", "CHF", "NOK", "SEK"));
-        plzList = readFromExcel();
+        plzList = getArrayList("plzList");
 
         //Adapters initialization
         categoryAdapter = new CategoryAdapter(this, categoryItemArrayList);
@@ -278,6 +284,7 @@ public class sellingItem extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -397,36 +404,7 @@ public class sellingItem extends AppCompatActivity {
         return response;
     }
 
-    public ArrayList<String> readFromExcel() {
 
-        ArrayList<String> result = new ArrayList<>();
-        try {
-            AssetManager assetManager = getAssets();
-            InputStream inputStream = assetManager.open("PlzListe.xls");
-            WorkbookSettings ws = new WorkbookSettings();
-            ws.setEncoding("Cp1252");
-            Workbook workbook = Workbook.getWorkbook(inputStream, ws);
-
-            Sheet sheet = workbook.getSheet(0);
-
-            int row = sheet.getRows();
-            int columns = sheet.getColumns();
-
-            for (int i = 0; i < row; i++) {
-                String line = "";
-                for (int j = 0; j < columns; j++) {
-                    Cell cell = sheet.getCell(j, i);
-                    line += cell.getContents() + " ";
-                }
-                result.add(line);
-            }
-            return result;
-        } catch (Exception ex) {
-            Toast.makeText(this, "ERROR , " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-            ex.printStackTrace();
-        }
-        return null;
-    }
 
     public class RoundedImageView extends AppCompatImageView {
         private Paint mPaint;
@@ -558,7 +536,13 @@ public class sellingItem extends AppCompatActivity {
         }
         return location;
     }
-
+    public ArrayList<String> getArrayList(String key){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
 
 }
 

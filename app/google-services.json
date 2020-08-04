@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "299858357729",
+    "firebase_url": "https://easybusiness-c1e28.firebaseio.com",
+    "project_id": "easybusiness-c1e28",
+    "storage_bucket": "easybusiness-c1e28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299858357729:android:d48fa79cdf2e8b9359b6a0",
+        "android_client_info": {
+          "package_name": "com.myapps.easybusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299858357729-6ef56ek1anvte0os0qa0nss62skrok23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myapps.easybusiness",
+            "certificate_hash": "880abe628df53930f15d5afb6b7ec8ccf95b6342"
+          }
+        },
+        {
+          "client_id": "299858357729-af9rhd0lf6eii9dfki90qi9a6tonh6cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFUtjchcDjUyuzZ9Eqp-tLRW-wWIeCiHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299858357729-af9rhd0lf6eii9dfki90qi9a6tonh6cp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

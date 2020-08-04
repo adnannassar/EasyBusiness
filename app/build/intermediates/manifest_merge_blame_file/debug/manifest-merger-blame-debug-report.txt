@@ -1,0 +1,204 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.myapps.easybusiness"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml
+10    <!--
+11         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+12         Google Maps Android API v2, but you must specify either coarse or fine
+13         location permissions for the 'MyLocation' functionality.
+14    -->
+15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+15-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:9:5-79
+15-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:10:5-76
+16-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:10:22-73
+17    <uses-permission android:name="android.permission.INTERNET" />
+17-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:11:5-67
+17-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:11:22-64
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:12:5-79
+18-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:12:22-76
+19    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+19-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:13:5-80
+19-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:13:22-77
+20
+21    <uses-feature
+21-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
+22        android:glEsVersion="0x00020000"
+22-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
+23        android:required="true" />
+23-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
+24
+25    <application
+25-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:15:5-58:19
+26        android:name="com.myapps.easybusiness.Datenhaltung.StarterApplication"
+26-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:16:9-56
+27        android:allowBackup="true"
+27-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:17:9-35
+28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+28-->[androidx.core:core:1.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\426b41a412186af36330cd4ba591c080\core-1.1.0\AndroidManifest.xml:24:18-86
+29        android:debuggable="true"
+30        android:icon="@mipmap/ic_launcher"
+30-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:18:9-43
+31        android:label="@string/app_name"
+31-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:19:9-41
+32        android:networkSecurityConfig="@xml/network_security_config"
+32-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:20:9-69
+33        android:roundIcon="@mipmap/ic_launcher_round"
+33-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:21:9-54
+34        android:supportsRtl="true"
+34-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:22:9-35
+35        android:testOnly="true"
+36        android:theme="@style/AppTheme"
+36-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:23:9-40
+37        android:usesCleartextTraffic="true" >
+37-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:24:9-44
+38        <activity android:name="com.myapps.easybusiness.Gui.Chat.Chat_Activity" />
+38-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:25:9-69
+38-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:25:19-57
+39        <!--
+40             The API key for Google Maps-based APIs is defined as a string resource.
+41             (See the file "res/values/google_maps_api.xml").
+42             Note that the API key is linked to the encryption key used to sign the APK.
+43             You need a different API key for each encryption key, including the release key that is used to
+44             sign the APK for publishing.
+45             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+46        -->
+47        <meta-data
+47-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:34:9-36:55
+48            android:name="com.google.android.geo.API_KEY"
+48-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:35:13-58
+49            android:value="@string/google_maps_key" />
+49-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:36:13-52
+50
+51        <activity
+51-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:38:9-40:75
+52            android:name="com.myapps.easybusiness.Datenhaltung.googleMapsActivity"
+52-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:39:13-60
+53            android:label="@string/title_activity_google_maps" />
+53-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:40:13-63
+54        <activity android:name="com.myapps.easybusiness.Gui.DisplyItems.DisplyItemsActivity" />
+54-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:41:9-73
+54-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:41:19-70
+55        <activity android:name="com.myapps.easybusiness.FachLogic.itemsInListViewItem" />
+55-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:42:9-67
+55-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:42:19-64
+56        <activity
+56-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:43:9-46:59
+57            android:name="com.myapps.easybusiness.Gui.User.userTapped"
+57-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:44:13-48
+58            android:label="@string/title_activity_user_tapped"
+58-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:45:13-63
+59            android:theme="@style/AppTheme.NoActionBar" />
+59-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:46:13-56
+60        <activity android:name="com.myapps.easybusiness.Gui.SellingItems.sellingItem" />
+60-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:47:9-66
+60-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:47:19-63
+61        <activity android:name="com.myapps.easybusiness.Gui.User.User_Activity" />
+61-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:48:9-60
+61-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:48:19-57
+62        <activity android:name="com.myapps.easybusiness.Gui.Login_SignUp.login" />
+62-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:49:9-60
+62-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:49:19-57
+63        <activity android:name="com.myapps.easybusiness.Gui.MainMenu.Main_menu_Activity" />
+63-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:50:9-69
+63-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:50:19-66
+64        <activity android:name="com.myapps.easybusiness.Gui.StarterApplication.MainActivity" >
+64-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:51:9-57:20
+64-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:51:19-70
+65            <intent-filter>
+65-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:52:13-56:29
+66                <action android:name="android.intent.action.MAIN" />
+66-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:53:17-69
+66-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:53:25-66
+67
+68                <category android:name="android.intent.category.LAUNCHER" />
+68-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:55:17-77
+68-->C:\Wichtig\ADNAN_WICHTIG\EasyBusiness Kopien\sichere Kopie\EasyBusiness\app\src\main\AndroidManifest.xml:55:27-74
+69            </intent-filter>
+70        </activity>
+71        <!-- Needs to be explicitly declared on P+ -->
+72        <uses-library
+72-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+73            android:name="org.apache.http.legacy"
+73-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+74            android:required="false" />
+74-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a53e7e1ae80dfd379dd87723ed34e6f\jetified-play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+75
+76        <activity
+76-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:24:9-31:50
+77            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+77-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:25:13-85
+78            android:excludeFromRecents="true"
+78-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:26:13-46
+79            android:exported="true"
+79-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:27:13-36
+80            android:launchMode="singleTask"
+80-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:28:13-44
+81            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+81-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:29:13-102
+82            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+82-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:30:13-72
+83
+84        <service
+84-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:33:9-39:19
+85            android:name="com.google.firebase.components.ComponentDiscoveryService"
+85-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:34:13-84
+86            android:exported="false" >
+86-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:35:13-37
+87            <meta-data
+87-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:36:13-38:85
+88                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+88-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:37:17-109
+89                android:value="com.google.firebase.components.ComponentRegistrar" />
+89-->[com.google.firebase:firebase-auth:16.0.5] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\3af510cb400839dd9eba7c9eef0220f2\jetified-firebase-auth-16.0.5\AndroidManifest.xml:38:17-82
+90        </service>
+91
+92        <activity
+92-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\8073dd5f6a1e18eead1ec1c9796e6e96\jetified-play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+93            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+93-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\8073dd5f6a1e18eead1ec1c9796e6e96\jetified-play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+94            android:exported="false"
+94-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\8073dd5f6a1e18eead1ec1c9796e6e96\jetified-play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+95            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+95-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\8073dd5f6a1e18eead1ec1c9796e6e96\jetified-play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+96
+97        <provider
+97-->[com.google.firebase:firebase-common:16.0.3] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a04e73b7ee11368ce9f06c8f9c6bf1d\jetified-firebase-common-16.0.3\AndroidManifest.xml:10:9-14:39
+98            android:name="com.google.firebase.provider.FirebaseInitProvider"
+98-->[com.google.firebase:firebase-common:16.0.3] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a04e73b7ee11368ce9f06c8f9c6bf1d\jetified-firebase-common-16.0.3\AndroidManifest.xml:11:13-77
+99            android:authorities="com.myapps.easybusiness.firebaseinitprovider"
+99-->[com.google.firebase:firebase-common:16.0.3] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a04e73b7ee11368ce9f06c8f9c6bf1d\jetified-firebase-common-16.0.3\AndroidManifest.xml:12:13-72
+100            android:exported="false"
+100-->[com.google.firebase:firebase-common:16.0.3] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a04e73b7ee11368ce9f06c8f9c6bf1d\jetified-firebase-common-16.0.3\AndroidManifest.xml:13:13-37
+101            android:initOrder="100" />
+101-->[com.google.firebase:firebase-common:16.0.3] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\7a04e73b7ee11368ce9f06c8f9c6bf1d\jetified-firebase-common-16.0.3\AndroidManifest.xml:14:13-36
+102
+103        <meta-data
+103-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\d241a53f188ac92cfadf17d9dd615ec2\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+104            android:name="com.google.android.gms.version"
+104-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\d241a53f188ac92cfadf17d9dd615ec2\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+105            android:value="@integer/google_play_services_version" />
+105-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\d241a53f188ac92cfadf17d9dd615ec2\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+106
+107        <provider
+107-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\95a8f4d776a166b33faecd8014986505\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
+108            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+108-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\95a8f4d776a166b33faecd8014986505\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79
+109            android:authorities="com.myapps.easybusiness.lifecycle-process"
+109-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\95a8f4d776a166b33faecd8014986505\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
+110            android:exported="false"
+110-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\95a8f4d776a166b33faecd8014986505\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
+111            android:multiprocess="true" />
+111-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Adnan\.gradle\caches\transforms-2\files-2.1\95a8f4d776a166b33faecd8014986505\jetified-lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
+112    </application>
+113
+114</manifest>
